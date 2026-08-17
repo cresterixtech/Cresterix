@@ -1,0 +1,151 @@
+/* ------------------------------------------------------------------
+   CRESTERIX — design tokens
+   Visual identity per blueprint §18: deep black/charcoal base,
+   off-white type, restrained electric blue / cyan / blue-violet accent,
+   large type, generous whitespace, thin borders, subtle gradients.
+   ------------------------------------------------------------------ */
+
+:root {
+  /* ---- Ground -------------------------------------------------- */
+  --void: #05070a; /* deepest — the 3D environment */
+  --base: #080b10; /* page background */
+  --surface-1: #0d1117; /* raised panel */
+  --surface-2: #121822; /* hover / nested panel */
+  --surface-3: #182130;
+
+  /* ---- Ink -----------------------------------------------------
+     Every value that carries text clears WCAG AA (4.5:1) against
+     --base. Measured, not guessed:
+       ink       16.34:1   ink-dim   8.69:1
+       ink-mute   4.63:1   ink-faint 4.64:1
+     --ink-decor is the only sub-AA value and is never used for text. */
+  --ink: #e7eaef; /* primary off-white */
+  --ink-dim: #a2adbf; /* secondary copy */
+  --ink-mute: #6e7c8d; /* tertiary copy */
+  --ink-faint: #6a7c97; /* small meta text */
+  --ink-decor: #3d4757; /* hairlines and non-text decoration only */
+
+  /* ---- Accent (restrained) -------------------------------------
+     --accent is a fill colour (4.38:1 — fine behind white text at
+     4.50:1, too low as text itself). --accent-text is the readable
+     variant at 6.23:1 and is what small mono numerals use. */
+  --accent: #2f6bff;
+  --accent-text: #5b8cff;
+  --accent-bright: #5b8cff;
+  --accent-deep: #1b47b8;
+  --cyan: #46d8e8;
+  --violet: #7c6ff0;
+
+  /* ---- Lines: thin borders, never heavy ------------------------ */
+  --line: rgb(231 234 239 / 8%);
+  --line-mid: rgb(231 234 239 / 14%);
+  --line-strong: rgb(231 234 239 / 22%);
+  --line-accent: rgb(47 107 255 / 38%);
+
+  /* ---- Glows / washes ------------------------------------------ */
+  --glow-accent: rgb(47 107 255 / 14%);
+  --glow-cyan: rgb(70 216 232 / 12%);
+  --wash: linear-gradient(180deg, rgb(47 107 255 / 6%), transparent 70%);
+
+  /* ---- Type ----------------------------------------------------- */
+  --font-display: "Sora", "Segoe UI", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Fluid scale — large typography, per §18 */
+  /* Lower bound tuned so the longest hero line ("Businesses Forward.")
+     still fits on one row at 375px instead of orphaning a word. */
+  --fs-display: clamp(2.6rem, 0.85rem + 7.2vw, 8.5rem);
+  --fs-h1: clamp(2.3rem, 1.25rem + 4.3vw, 5rem);
+  --fs-h2: clamp(1.85rem, 1.2rem + 2.7vw, 3.4rem);
+  --fs-h3: clamp(1.3rem, 1.05rem + 1.05vw, 1.85rem);
+  --fs-h4: clamp(1.08rem, 0.98rem + 0.42vw, 1.3rem);
+  --fs-lead: clamp(1.05rem, 0.97rem + 0.4vw, 1.28rem);
+  --fs-body: 1rem;
+  --fs-sm: 0.9rem;
+  --fs-xs: 0.8125rem;
+  --fs-mono: 0.75rem;
+  --fs-mono-sm: 0.6875rem;
+
+  --lh-tight: 0.98;
+  --lh-snug: 1.12;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.68;
+
+  --tracking-display: -0.035em;
+  --tracking-tight: -0.02em;
+  --tracking-mono: 0.16em;
+  --tracking-wide: 0.24em;
+
+  /* ---- Space (generous whitespace) ----------------------------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 8rem;
+  --s-11: 12rem;
+
+  /* Section rhythm. This is padding on *each* side, so the figure here
+     is doubled wherever two sections meet — at the previous 11rem that
+     meant 352px of empty ground between every block on a desktop. */
+  --section-y: clamp(2.5rem, 1.75rem + 3vw, 4.75rem);
+  --gutter: clamp(1.25rem, 0.6rem + 2.6vw, 4rem);
+  --measure: 62ch;
+
+  /* Width for full-bleed *fixed* chrome (nav, menu, canvas, boot).
+     `inset: 0` and `width: 100%` both resolve against the initial
+     containing block, which some mobile browsers report wider than the
+     visible viewport — the nav then laid itself out ~43px too wide and
+     pushed the burger off-screen. `100vw` alone is not the answer
+     either: on desktop it *includes* the classic scrollbar and would
+     overflow by its width. The min() is correct in both directions.
+     `100%` is substituted verbatim, so it resolves per element. */
+  --bleed: min(100%, 100vw);
+  --maxw: 1440px;
+  --maxw-narrow: 940px;
+
+  /* ---- Radii: tight and technical, never pill-soft ------------- */
+  --r-xs: 2px;
+  --r-sm: 3px;
+  --r: 4px;
+  --r-lg: 8px;
+  --r-full: 999px;
+
+  /* ---- Motion -------------------------------------------------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --d-fast: 180ms;
+  --d: 320ms;
+  --d-slow: 620ms;
+  --d-cine: 1100ms;
+
+  /* ---- Layering ------------------------------------------------ */
+  --z-canvas: 0;
+  --z-content: 1;
+  --z-nav: 60;
+  --z-overlay: 80;
+  --z-cursor: 100;
+
+  --nav-h: 74px;
+}
+
+@media (max-width: 720px) {
+  :root {
+    --nav-h: 62px;
+  }
+}
+
+/* Very narrow legacy handsets (320px). The fluid lower bound is still
+   ~27px too wide for the longest headline line here, so step it down
+   rather than let a word orphan. */
+@media (max-width: 360px) {
+  :root {
+    --fs-display: 2.3rem;
+  }
+}

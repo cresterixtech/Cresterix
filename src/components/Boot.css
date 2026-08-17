@@ -1,0 +1,75 @@
+.boot {
+  position: fixed;
+  inset: 0;
+  width: var(--bleed);
+  z-index: 150;
+  display: grid;
+  place-items: center;
+  background: var(--void);
+  transition: opacity 800ms var(--ease-out), visibility 800ms;
+}
+.boot.is-done {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.boot__center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.boot__mark {
+  height: clamp(48px, 8vw, 76px);
+  color: var(--ink);
+  opacity: 0;
+  animation: boot-mark 1400ms var(--ease-out) 120ms forwards;
+}
+@keyframes boot-mark {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+.boot__line {
+  width: min(220px, 44vw);
+  height: 1px;
+  background: var(--line-mid);
+  overflow: hidden;
+}
+.boot__line span {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  transform: translateX(-100%);
+  animation: boot-sweep 1300ms var(--ease-in-out) infinite;
+}
+@keyframes boot-sweep {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.boot__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  opacity: 0;
+  animation: boot-fade 900ms var(--ease-out) 520ms forwards;
+}
+@keyframes boot-fade {
+  to {
+    opacity: 1;
+  }
+}

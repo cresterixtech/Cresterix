@@ -1,0 +1,197 @@
+.cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+  gap: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+}
+
+/* A single full-width image read as one bulky slab. The card is now a
+   panel split between the shot and its meta, so the image is sized to
+   its content rather than to the page. */
+.case {
+  display: grid;
+  gap: clamp(1.1rem, 0.8rem + 1.4vw, 2.25rem);
+  align-items: center;
+  padding: clamp(0.85rem, 0.7rem + 0.8vw, 1.35rem);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 130% at 78% 0%, rgb(47 107 255 / 7%), transparent 60%),
+    linear-gradient(180deg, rgb(18 24 34 / 55%), rgb(8 11 16 / 65%));
+  transition:
+    border-color var(--d-slow) var(--ease-out),
+    background-color var(--d-slow) var(--ease-out),
+    transform var(--d-slow) var(--ease-out);
+}
+@media (min-width: 900px) {
+  .case {
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  }
+}
+.case:hover {
+  border-color: var(--line-mid);
+  transform: translateY(-3px);
+}
+
+.case__frame {
+  position: relative;
+  /* Matches the asset's own 3:2 exactly, so nothing is cropped away. */
+  aspect-ratio: 3 / 2;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(120% 100% at 50% 0%, rgb(47 107 255 / 12%), transparent 62%),
+    linear-gradient(180deg, rgb(18 24 34 / 90%), rgb(8 11 16 / 92%));
+}
+
+.case__grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(75% 65% at 50% 45%, #000, transparent 78%);
+  opacity: 0.7;
+}
+
+.case__mark {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 2rem + 9vw, 8rem);
+  font-weight: 200;
+  letter-spacing: -0.06em;
+  color: rgb(231 234 239 / 12%);
+  line-height: 1;
+  transition: color var(--d-slow) var(--ease-out);
+}
+.case:hover .case__mark {
+  color: rgb(231 234 239 / 20%);
+}
+
+/* Shown at full strength: dimmed to 0.62 it just looked washed out, and
+   the off-centre crop was cutting the phones off at the bottom. */
+.case__shot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform var(--d-slow) var(--ease-out);
+}
+.case:hover .case__shot {
+  transform: scale(1.02);
+}
+@media (prefers-reduced-motion: reduce) {
+  .case__shot,
+  .case:hover .case__shot {
+    transform: none;
+    transition: none;
+  }
+}
+
+.case__status {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid var(--line-mid);
+  border-radius: var(--r-sm);
+  background: rgb(5 7 10 / 70%);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.case__status::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.case__status.is-live {
+  color: var(--cyan);
+}
+.case__status.is-pending {
+  color: var(--ink-faint);
+}
+
+.case__name {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
+}
+.case__sub {
+  color: var(--ink-dim);
+  font-size: var(--fs-sm);
+  margin-top: 0.35rem;
+}
+.case__tags {
+  margin-top: 1.1rem;
+}
+/* In the split layout the meta gets its own breathing room instead of
+   sitting flush under a full-bleed image. */
+@media (min-width: 900px) {
+  .case__meta {
+    padding-right: clamp(0.5rem, 0.2rem + 1vw, 1.5rem);
+  }
+  .case__name {
+    font-size: var(--fs-h2);
+  }
+}
+
+.work__notice {
+  margin-top: var(--s-7);
+  max-width: 78ch;
+}
+
+/* ---- Method fields ------------------------------------------------ */
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+.field {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.field__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  color: var(--accent-text);
+}
+.field__label {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: var(--tracking-tight);
+}
+
+.work__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-5);
+}
+.work__ctaTitle {
+  font-size: clamp(1.8rem, 1.2rem + 2.6vw, 3.2rem);
+  font-weight: 300;
+  letter-spacing: -0.038em;
+  line-height: 1.04;
+}

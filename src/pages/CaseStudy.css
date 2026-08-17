@@ -1,0 +1,312 @@
+.cs__hero {
+  padding-top: calc(var(--nav-h) + clamp(3rem, 2rem + 6vw, 7rem));
+  padding-bottom: clamp(2rem, 1.6rem + 2.4vw, 3.25rem);
+}
+
+/* The section rhythm this page needed is now the global default in
+   tokens.css, so the local override that used to live here is gone. */
+.cs__heroInner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  align-items: flex-start;
+}
+.cs__back {
+  margin-bottom: var(--s-3);
+}
+.cs__title {
+  font-size: var(--fs-h1);
+  font-weight: 300;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+.cs__sub {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 300;
+  color: var(--ink-dim);
+  letter-spacing: var(--tracking-tight);
+}
+.cs__notice {
+  margin-top: var(--s-4);
+  max-width: 70ch;
+}
+.cs__summary {
+  max-width: 62ch;
+  margin-top: var(--s-2);
+}
+
+/* ---- Product shot ------------------------------------------------
+   The supplied artwork is light-on-white; on this dark ground it needs
+   a frame of its own rather than floating as a bright slab. */
+.csshot__fig {
+  margin: 0;
+}
+.csshot__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--r-lg);
+  border: 1px solid var(--line);
+  background: var(--surface-1);
+  box-shadow: 0 30px 80px -40px rgb(0 0 0 / 85%);
+}
+.csshot__cap {
+  margin-top: var(--s-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ---- Fact strip ---------------------------------------------------
+   Cells size to their content rather than to five equal columns: with
+   short values, equal columns left most of each cell empty and the
+   dividers landing far from the text they belonged to. */
+.csfacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+/* RevealGroup wraps each child in a .reveal-item, so the flex items are
+   those wrappers — not .csfact. Sizing must be applied here or the
+   cells never grow and the strip ends short of its own border. */
+.csfacts > * {
+  flex: 1 1 auto;
+  display: flex;
+}
+.csfact {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: clamp(0.85rem, 0.75rem + 0.4vw, 1.15rem) clamp(1rem, 0.85rem + 0.6vw, 1.5rem);
+  background: var(--base);
+}
+.csfact__k {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+.csfact__v {
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
+/* Deliberate wrapping. Left to flex alone, five cells break 4+1 and
+   strand "Status" on a row of its own; these bases give 3+2, then 2+2+1,
+   then a single column. */
+@media (max-width: 1180px) {
+  .csfacts > * {
+    flex: 1 1 30%;
+  }
+}
+@media (max-width: 780px) {
+  .csfacts > * {
+    flex: 1 1 40%;
+  }
+}
+/* Single column only on genuinely tiny screens — at 375px a stacked
+   list of five ran 370px tall, far more vertical space than a fact
+   strip should take. */
+@media (max-width: 359px) {
+  .csfacts > * {
+    flex: 1 1 100%;
+  }
+}
+
+/* ---- Approach ----------------------------------------------------- */
+.csapproach {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--s-6);
+}
+.csstep {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+}
+.csstep__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-mono);
+  color: var(--accent-text);
+}
+.csstep__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+.csstep__body {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-dim);
+  max-width: 46ch;
+}
+
+/* ---- Engineering log ---------------------------------------------- */
+.cslog {
+  display: flex;
+  flex-direction: column;
+}
+.cslog__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5rem;
+  padding-block: clamp(1.1rem, 0.9rem + 1vw, 1.8rem);
+  border-bottom: 1px solid var(--line);
+}
+.cslog__row:first-child {
+  border-top: 1px solid var(--line);
+}
+@media (min-width: 860px) {
+  .cslog__row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    gap: var(--s-6);
+    align-items: baseline;
+  }
+}
+.cslog__problem {
+  color: var(--ink);
+  line-height: var(--lh-relaxed);
+}
+.cslog__fix {
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+  line-height: var(--lh-relaxed);
+}
+
+/* ---- Assurance list ----------------------------------------------- */
+.csassure {
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--line);
+}
+.csassure__label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--accent-text);
+  margin-bottom: 0.9rem;
+}
+.csassure__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.csassure__list li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-dim);
+}
+.csassure__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.cs__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-8);
+}
+@media (min-width: 1000px) {
+  .cs__body {
+    grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+    gap: var(--s-9);
+    align-items: start;
+  }
+  .cs__side {
+    position: sticky;
+    top: calc(var(--nav-h) + 2rem);
+  }
+}
+
+.cs__fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.csfield {
+  padding-block: clamp(1.5rem, 1rem + 1.6vw, 2.5rem);
+  border-bottom: 1px solid var(--line);
+}
+.csfield:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.csfield__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--accent-text);
+  margin-bottom: 0.9rem;
+}
+
+.csfield__value {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-dim);
+  max-width: var(--measure);
+}
+
+.csfield__pending {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.csfield__hint {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--ink-faint);
+  opacity: 0.8;
+}
+
+.cs__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-5);
+}
+.cs__ctaTitle {
+  font-size: clamp(1.9rem, 1.3rem + 2.8vw, 3.4rem);
+  font-weight: 300;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+}

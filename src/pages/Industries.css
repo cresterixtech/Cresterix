@@ -1,0 +1,80 @@
+.ind {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+  min-height: 13rem;
+  overflow: hidden;
+  scroll-margin-top: calc(var(--nav-h) + 2rem);
+  transition: background-color var(--d) var(--ease-out);
+}
+.ind:hover {
+  background: rgb(47 107 255 / 5%);
+}
+
+.ind__index {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  color: var(--ink-faint);
+  transition: color var(--d) var(--ease-out);
+}
+.ind:hover .ind__index {
+  color: var(--accent-text);
+}
+
+.ind__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 400;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
+}
+
+.ind__body {
+  color: var(--ink-mute);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  max-width: 40ch;
+}
+
+/* Corner light that tracks nothing but hover — restrained, not showy. */
+.ind__glow {
+  position: absolute;
+  right: -30%;
+  bottom: -60%;
+  width: 70%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(70 216 232 / 16%), transparent 68%);
+  opacity: 0;
+  transition: opacity var(--d-slow) var(--ease-out);
+  pointer-events: none;
+}
+.ind:hover .ind__glow {
+  opacity: 1;
+}
+
+.inds__closing {
+  margin-top: var(--s-6);
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  font-weight: 300;
+  color: var(--ink-dim);
+  letter-spacing: var(--tracking-tight);
+}
+
+.inds__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-5);
+}
+.inds__ctaTitle {
+  font-size: clamp(1.7rem, 1.2rem + 2.4vw, 3rem);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  max-width: 22ch;
+}

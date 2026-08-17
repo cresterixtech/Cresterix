@@ -1,0 +1,114 @@
+.topics__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: var(--s-6);
+}
+
+.topic {
+  padding: 0.5rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  background: transparent;
+  transition:
+    border-color var(--d) var(--ease-out),
+    color var(--d) var(--ease-out),
+    background-color var(--d) var(--ease-out);
+}
+.topic:hover {
+  color: var(--ink);
+  border-color: var(--line-mid);
+}
+.topic.is-active {
+  color: var(--ink);
+  border-color: var(--line-accent);
+  background: rgb(47 107 255 / 12%);
+}
+
+.articles {
+  border-top: 1px solid var(--line);
+}
+
+.article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.6rem;
+  padding-block: clamp(1.5rem, 1rem + 1.7vw, 2.5rem);
+  border-bottom: 1px solid var(--line);
+  transition: background-color var(--d) var(--ease-out);
+}
+@media (min-width: 820px) {
+  .article {
+    grid-template-columns: 4rem minmax(0, 1fr) 8rem;
+    gap: 2rem;
+    align-items: baseline;
+  }
+}
+
+.article__num {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-mono);
+  color: var(--accent-text);
+}
+
+.article__topic {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.5rem;
+}
+
+.article__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 1rem + 1.6vw, 2.1rem);
+  font-weight: 300;
+  letter-spacing: -0.032em;
+  line-height: 1.12;
+  max-width: 30ch;
+}
+
+.article__status {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+@media (min-width: 820px) {
+  .article__status {
+    text-align: right;
+  }
+}
+
+.articles__empty {
+  padding-block: var(--s-7);
+  color: var(--ink-mute);
+}
+
+.insights__notice {
+  margin-top: var(--s-7);
+  max-width: 76ch;
+}
+
+.insights__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-5);
+}
+.insights__ctaTitle {
+  font-size: clamp(1.7rem, 1.2rem + 2.4vw, 3rem);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  max-width: 24ch;
+}

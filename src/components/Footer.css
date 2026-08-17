@@ -1,0 +1,116 @@
+.foot {
+  position: relative;
+  margin-top: var(--s-9);
+  border-top: 1px solid var(--line);
+  background: linear-gradient(180deg, rgb(5 7 10 / 55%), rgb(5 7 10 / 94%));
+  backdrop-filter: blur(18px);
+}
+
+.foot__inner {
+  display: grid;
+  gap: var(--s-7) var(--s-6);
+  grid-template-columns: minmax(0, 1fr);
+  padding-block: var(--s-8) var(--s-7);
+}
+@media (min-width: 700px) {
+  .foot__inner {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .foot__brand {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 1040px) {
+  .foot__inner {
+    grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+  }
+  .foot__brand {
+    grid-column: auto;
+  }
+}
+
+.foot__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  align-items: flex-start;
+}
+.foot__brand .logo__mark {
+  height: 2rem;
+}
+.foot__brand .logo__word {
+  height: 0.86rem;
+}
+
+.foot__disc {
+  font-size: var(--fs-sm);
+  color: var(--ink-mute);
+  max-width: 34ch;
+}
+
+.foot__loc {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.foot__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 0 3px rgb(70 216 232 / 14%);
+}
+
+.foot__head {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: var(--s-4);
+}
+
+.foot__col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.foot__col a {
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+  transition: color var(--d) var(--ease-out);
+}
+.foot__col a:hover {
+  color: var(--ink);
+}
+
+.foot__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: var(--s-5);
+  border-top: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+.foot__legal {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+.foot__legal a {
+  transition: color var(--d) var(--ease-out);
+}
+.foot__legal a:hover {
+  color: var(--ink-dim);
+}

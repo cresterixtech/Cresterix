@@ -1,0 +1,88 @@
+.hud {
+  position: fixed;
+  left: max(1.25rem, calc((100vw - var(--maxw)) / 2 + 1.25rem));
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: none;
+  gap: 1rem;
+  pointer-events: none;
+}
+
+/* The rail needs real room — only show it where it won't crowd copy. */
+@media (min-width: 1280px) and (min-height: 620px) {
+  .hud {
+    display: flex;
+  }
+}
+
+.hud__track {
+  position: relative;
+  width: 1px;
+  background: var(--line);
+  flex: none;
+}
+.hud__fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--accent), var(--cyan));
+  transform-origin: top;
+  transform: scaleY(0);
+}
+
+.hud__list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.35rem;
+}
+
+.hud__item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transition: color 520ms var(--ease-out), opacity 520ms var(--ease-out);
+  opacity: 0.55;
+}
+.hud__item.is-past {
+  color: var(--ink-mute);
+  opacity: 0.7;
+}
+.hud__item.is-active {
+  color: var(--ink);
+  opacity: 1;
+}
+
+.hud__num {
+  color: inherit;
+  opacity: 0.55;
+}
+.hud__item.is-active .hud__num {
+  color: var(--accent-text);
+  opacity: 1;
+}
+
+.hud__label {
+  position: relative;
+}
+.hud__item.is-active .hud__label::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: var(--accent);
+  animation: hud-in 520ms var(--ease-out) both;
+}
+@keyframes hud-in {
+  from {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+}

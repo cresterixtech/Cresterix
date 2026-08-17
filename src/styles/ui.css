@@ -1,0 +1,489 @@
+/* ------------------------------------------------------------------
+   CRESTERIX — shared UI primitives
+   ------------------------------------------------------------------ */
+
+/* ---- The cinematic layer -------------------------------------- */
+.cine {
+  position: fixed;
+  inset: 0;
+  width: var(--bleed);
+  z-index: var(--z-canvas);
+  pointer-events: none;
+  background: var(--void);
+  /* The canvas is sized by R3F from this box; clip so it can never
+     contribute to document width even mid-resize. */
+  overflow: clip;
+}
+.cine canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+.cine--fallback {
+  background:
+    radial-gradient(120% 80% at 50% 0%, rgb(47 107 255 / 10%), transparent 60%),
+    radial-gradient(90% 60% at 80% 90%, rgb(70 216 232 / 6%), transparent 60%),
+    var(--void);
+}
+
+/* Content sits above the canvas; the page itself is transparent so the
+   3D environment reads through, with a scrim behind dense copy. */
+.app {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+/* ---- Logo ------------------------------------------------------ */
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--ink);
+}
+.mark,
+.wordmark {
+  display: block;
+}
+.mark svg,
+.wordmark svg {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+.logo__mark {
+  height: 1.55rem;
+  flex: none;
+}
+.logo__type {
+  display: flex;
+  flex-direction: column;
+  gap: 0.28rem;
+}
+.logo__word {
+  height: 0.72rem;
+}
+.logo__tagline {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.logo--compact .logo__word {
+  height: 0.62rem;
+}
+
+/* ---- Buttons --------------------------------------------------- */
+.btn {
+  --mx: 0px;
+  --my: 0px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.95rem 1.5rem;
+  border-radius: var(--r);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  font-weight: 500;
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
+  transform: translate3d(var(--mx), var(--my), 0);
+  transition:
+    transform 480ms var(--ease-out),
+    border-color var(--d) var(--ease-out),
+    background-color var(--d) var(--ease-out),
+    color var(--d) var(--ease-out);
+}
+
+.btn__arrow {
+  width: 1em;
+  height: 1em;
+  flex: none;
+  transition: transform var(--d) var(--ease-out);
+}
+.btn:hover .btn__arrow {
+  transform: translateX(3px);
+}
+
+.btn__sheen {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgb(255 255 255 / 16%) 50%,
+    transparent 80%
+  );
+  transform: translateX(-100%);
+  transition: opacity var(--d) var(--ease-out);
+}
+.btn:hover .btn__sheen {
+  opacity: 1;
+  animation: sheen 900ms var(--ease-out);
+}
+@keyframes sheen {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid var(--accent);
+  box-shadow: 0 0 0 0 rgb(47 107 255 / 40%);
+}
+.btn--primary:hover {
+  background: var(--accent-bright);
+  border-color: var(--accent-bright);
+  box-shadow: 0 8px 34px -10px rgb(47 107 255 / 70%);
+}
+
+.btn--ghost {
+  border: 1px solid var(--line-mid);
+  color: var(--ink);
+  background: rgb(231 234 239 / 3%);
+  backdrop-filter: blur(8px);
+}
+.btn--ghost:hover {
+  border-color: var(--line-strong);
+  background: rgb(231 234 239 / 7%);
+}
+
+.btn--quiet {
+  padding-inline: 0;
+  color: var(--ink-dim);
+}
+.btn--quiet:hover {
+  color: var(--ink);
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+/* ---- Text link ------------------------------------------------- */
+.textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  padding-block: 0.35rem;
+  border-bottom: 1px solid transparent;
+  transition:
+    color var(--d) var(--ease-out),
+    border-color var(--d) var(--ease-out);
+}
+.textlink svg {
+  width: 1em;
+  height: 1em;
+  transition: transform var(--d) var(--ease-out);
+}
+.textlink:hover {
+  color: var(--ink);
+  border-color: var(--line-accent);
+}
+.textlink:hover svg {
+  transform: translateX(3px);
+}
+
+/* ---- Reveal ---------------------------------------------------- */
+.reveal,
+.reveal-item {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y, 18px), 0);
+  transition:
+    opacity 900ms var(--ease-out) var(--reveal-delay, 0ms),
+    transform 900ms var(--ease-out) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-in,
+.reveal-group.is-in .reveal-item {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal-lines__mask {
+  display: block;
+  overflow: hidden;
+  padding-block: 0.04em;
+}
+.reveal-lines__line {
+  display: block;
+  transform: translate3d(0, 105%, 0);
+  transition: transform 1000ms var(--ease-out) var(--reveal-delay, 0ms);
+  will-change: transform;
+}
+.reveal-lines.is-in .reveal-lines__line {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal-item,
+  .reveal-lines__line {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ---- Panels & cards -------------------------------------------
+   Thin borders, restrained glass, tight radii. Deliberately not
+   soft rounded cards with heavy shadows. */
+.panel {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background:
+    linear-gradient(180deg, rgb(231 234 239 / 3.5%), rgb(231 234 239 / 1%));
+  backdrop-filter: blur(14px) saturate(120%);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  padding: clamp(1.5rem, 1rem + 1.4vw, 2.25rem);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: linear-gradient(180deg, rgb(231 234 239 / 3%), rgb(231 234 239 / 0.8%));
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+  transition:
+    border-color var(--d) var(--ease-out),
+    background-color var(--d) var(--ease-out),
+    transform var(--d-slow) var(--ease-out);
+}
+
+/* A hairline that lights up from the pointer's side on hover. */
+.card::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity var(--d) var(--ease-out);
+}
+.card:hover {
+  border-color: var(--line-mid);
+  transform: translateY(-3px);
+}
+.card:hover::after {
+  opacity: 0.9;
+}
+
+.card__index {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-mono);
+  color: var(--ink-faint);
+  transition: color var(--d) var(--ease-out);
+}
+.card:hover .card__index {
+  color: var(--accent-text);
+}
+
+.card__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.25;
+}
+
+.card__body {
+  color: var(--ink-dim);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+}
+
+/* ---- Grids ----------------------------------------------------- */
+.grid {
+  display: grid;
+  gap: 1px;
+}
+.grid--3 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+}
+.grid--2 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+}
+.grid--4 {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+}
+
+/* Hairline grid: cells separated by 1px lines rather than gaps. */
+.grid--ruled {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--line);
+  overflow: hidden;
+}
+.grid--ruled > * {
+  background: rgb(8 11 16 / 72%);
+  backdrop-filter: blur(14px);
+}
+
+/* ---- Section headers ------------------------------------------- */
+.sechead {
+  display: grid;
+  gap: var(--s-5);
+  margin-bottom: var(--s-8);
+}
+.sechead__title {
+  max-width: 20ch;
+}
+.sechead--split {
+  grid-template-columns: minmax(0, 1fr);
+}
+@media (min-width: 900px) {
+  .sechead--split {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: end;
+    gap: var(--s-7);
+  }
+  .sechead--split .sechead__aside {
+    padding-bottom: 0.35rem;
+  }
+}
+
+/* ---- Scrim: keeps copy readable over the animated field --------
+   The field gets dense in the architecture and product chapters, so
+   the plate under copy has to be genuinely opaque at the centre. The
+   blueprint is explicit that the 3D layer supports the story and
+   never hides the information. */
+.scrim {
+  position: relative;
+}
+.scrim::before {
+  content: "";
+  position: absolute;
+  inset: -8vh -12vw;
+  z-index: -1;
+  background: radial-gradient(
+    68% 62% at 50% 50%,
+    rgb(5 7 10 / 95%) 0%,
+    rgb(5 7 10 / 84%) 38%,
+    rgb(5 7 10 / 52%) 62%,
+    transparent 82%
+  );
+  pointer-events: none;
+}
+
+/* Copy sitting directly on the field gets an extra local plate. */
+.scrim--tight::before {
+  inset: -4vh -6vw;
+  background: radial-gradient(
+    72% 68% at 50% 50%,
+    rgb(5 7 10 / 97%) 0%,
+    rgb(5 7 10 / 88%) 45%,
+    transparent 85%
+  );
+}
+
+/* Solid ground for information-dense inner-page sections. */
+.ground {
+  position: relative;
+  background: linear-gradient(180deg, rgb(5 7 10 / 0%), rgb(5 7 10 / 88%) 12%, rgb(5 7 10 / 92%) 88%, rgb(5 7 10 / 0%));
+}
+
+/* ---- Technical grid pattern ------------------------------------ */
+.techgrid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(to right, var(--line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--line) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(70% 60% at 50% 40%, #000 0%, transparent 75%);
+}
+
+/* ---- Meta rows (spec sheets) ----------------------------------- */
+.spec {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+.spec__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.35rem;
+  padding-block: 1.15rem;
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 720px) {
+  .spec__row {
+    grid-template-columns: 12rem minmax(0, 1fr);
+    gap: 2rem;
+    align-items: baseline;
+  }
+}
+.spec__key {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.spec__val {
+  color: var(--ink-dim);
+}
+
+/* ---- Tag / pill ------------------------------------------------ */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--line-mid);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  white-space: nowrap;
+}
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+/* ---- Notice: honest placeholder marker ------------------------- */
+.notice {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 1.15rem;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r);
+  background: rgb(47 107 255 / 5%);
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+}
+.notice__key {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--accent-bright);
+  flex: none;
+  padding-top: 0.15rem;
+}

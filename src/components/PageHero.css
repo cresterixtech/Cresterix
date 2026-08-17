@@ -1,0 +1,30 @@
+.phero {
+  position: relative;
+  padding-top: calc(var(--nav-h) + clamp(2.75rem, 1.75rem + 4.5vw, 6rem));
+  padding-bottom: clamp(2rem, 1.5rem + 2.6vw, 3.5rem);
+}
+
+.phero__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-5);
+}
+
+.phero__title {
+  font-size: var(--fs-h1);
+  font-weight: 300;
+  line-height: 0.98;
+  letter-spacing: -0.042em;
+  max-width: 18ch;
+}
+.phero__title .reveal-lines__mask:last-child .reveal-lines__line {
+  font-weight: 500;
+}
+
+.phero__lede {
+  max-width: 62ch;
+}
+
+.phero__aside {
+  margin-top: var(--s-3);
+}
