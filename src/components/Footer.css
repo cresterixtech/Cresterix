@@ -6,27 +6,27 @@
   backdrop-filter: blur(18px);
 }
 
+/* Two-tier grid: brand sits apart, the four link columns share their
+   own auto-fit row so a column can be added later without hand-tuning
+   a breakpoint for the new count — it just reflows. */
 .foot__inner {
   display: grid;
-  gap: var(--s-7) var(--s-6);
+  gap: var(--s-7);
   grid-template-columns: minmax(0, 1fr);
   padding-block: var(--s-8) var(--s-7);
 }
-@media (min-width: 700px) {
+@media (min-width: 860px) {
   .foot__inner {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .foot__brand {
-    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 2fr);
+    gap: var(--s-8);
+    align-items: start;
   }
 }
-@media (min-width: 1040px) {
-  .foot__inner {
-    grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
-  }
-  .foot__brand {
-    grid-column: auto;
-  }
+
+.foot__cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5rem), 1fr));
+  gap: var(--s-7) var(--s-5);
 }
 
 .foot__brand {
@@ -87,6 +87,32 @@
   transition: color var(--d) var(--ease-out);
 }
 .foot__col a:hover {
+  color: var(--ink);
+}
+
+.foot__addr {
+  display: flex;
+  flex-direction: column;
+  font-style: normal;
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+  line-height: var(--lh-relaxed);
+  margin-bottom: 0.9rem;
+}
+.foot__contactLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+.foot__contactLinks a {
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+  /* Phone numbers and emails run longer than the nav labels above and
+     this column can be as narrow as ~150px on a mid-size phone. */
+  overflow-wrap: anywhere;
+  transition: color var(--d) var(--ease-out);
+}
+.foot__contactLinks a:hover {
   color: var(--ink);
 }
 

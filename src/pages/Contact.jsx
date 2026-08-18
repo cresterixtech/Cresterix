@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import PageHero from "../components/PageHero";
 import Reveal from "../components/Reveal";
-import { PROJECT_TYPES, BUDGETS, TIMELINES } from "../data/site";
+import { PROJECT_TYPES, BUDGETS, TIMELINES, CONTACT_INFO, phoneHref } from "../data/site";
 import "./Contact.css";
 
 /* §13 — Contact page.
@@ -9,7 +9,14 @@ import "./Contact.css";
    Fields are exactly those specified in the blueprint. Submission
    posts to VITE_CONTACT_ENDPOINT when one is configured; until then
    the form validates fully and says plainly that it isn't connected,
-   rather than pretending to send. */
+   rather than pretending to send.
+
+   The form is visually parked behind a "coming soon" overlay until
+   there's somewhere for it to send its payload. Flip FORM_ENABLED once
+   VITE_CONTACT_ENDPOINT is live — everything below already works, it's
+   just gated off rather than deleted. */
+
+const FORM_ENABLED = false;
 
 const ENDPOINT = import.meta.env.VITE_CONTACT_ENDPOINT ?? "";
 
@@ -95,7 +102,10 @@ export default function Contact() {
       <div className="ground">
         <section className="section">
           <div className="shell contact">
+            <div className={`form__panel${FORM_ENABLED ? "" : " is-soon"}`}>
             <form className="form" onSubmit={onSubmit} noValidate>
+              <fieldset className="form__fieldset" disabled={!FORM_ENABLED}>
+              <legend className="visually-hidden">Project enquiry</legend>
               {invalid.length > 0 && (
                 <div
                   className="form__summary"
@@ -230,6 +240,7 @@ export default function Contact() {
                   Fields marked * are required. We reply to every genuine enquiry.
                 </p>
               </div>
+              </fieldset>
 
               <div aria-live="polite">
                 {state === "sent" && (
@@ -258,8 +269,55 @@ export default function Contact() {
               </div>
             </form>
 
+            {!FORM_ENABLED && (
+              <div className="form__soon">
+                <span className="notice__key">Coming Soon</span>
+                <h2 className="form__soonTitle">The enquiry form is getting an upgrade.</h2>
+                <p className="form__soonBody">
+                  Reach us directly using the details alongside — we reply to every
+                  genuine enquiry.
+                </p>
+                <a
+                  className="btn btn--primary form__soonCta"
+                  href={`mailto:${CONTACT_INFO.emails[0]}`}
+                >
+                  <span className="btn__label">Email Us</span>
+                  <svg className="btn__arrow" viewBox="0 0 16 16" aria-hidden="true">
+                    <path
+                      d="M2 8h11M9 4l4 4-4 4"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                      strokeLinecap="square"
+                    />
+                  </svg>
+                </a>
+              </div>
+            )}
+            </div>
+
             <aside className="contact__aside">
-              <Reveal className="contact__block">
+              <Reveal className="contact__block contact__block--direct">
+                <h2 className="contact__head">Reach us directly</h2>
+                <ul className="contact__list">
+                  {CONTACT_INFO.phones.map((p) => (
+                    <li key={p}>
+                      <a href={phoneHref(p)}>{p}</a>
+                    </li>
+                  ))}
+                  {CONTACT_INFO.emails.map((e) => (
+                    <li key={e}>
+                      <a href={`mailto:${e}`}>{e}</a>
+                    </li>
+                  ))}
+                </ul>
+                <address className="contact__addr">
+                  {CONTACT_INFO.addressLines.join(", ")}
+                </address>
+                <p className="contact__meta">India · Global Delivery</p>
+              </Reveal>
+
+              <Reveal className="contact__block" delay={100}>
                 <h2 className="contact__head">What happens next</h2>
                 <ol className="contact__steps">
                   <li>
@@ -276,18 +334,13 @@ export default function Contact() {
                 </ol>
               </Reveal>
 
-              <Reveal className="contact__block" delay={120}>
+              <Reveal className="contact__block" delay={180}>
                 <h2 className="contact__head">Engagement models</h2>
                 <ul className="contact__list">
                   <li>Project-Based</li>
                   <li>Dedicated Development</li>
                   <li>Product Partnership</li>
                 </ul>
-              </Reveal>
-
-              <Reveal className="contact__block" delay={200}>
-                <h2 className="contact__head">Delivery</h2>
-                <p className="contact__meta">India · Global Delivery</p>
               </Reveal>
             </aside>
           </div>

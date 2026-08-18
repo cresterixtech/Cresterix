@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
+import { CONTACT_INFO, phoneHref } from "../data/site";
 import "./Footer.css";
 
 const SITEMAP = [
@@ -42,40 +43,63 @@ export default function Footer() {
           </p>
         </div>
 
-        <nav className="foot__col" aria-label="Sitemap">
-          <h2 className="foot__head">Company</h2>
-          <ul>
-            {SITEMAP.map((l) => (
-              <li key={l.to}>
-                <Link to={l.to}>{l.label}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className="foot__cols">
+          <nav className="foot__col" aria-label="Sitemap">
+            <h2 className="foot__head">Company</h2>
+            <ul>
+              {SITEMAP.map((l) => (
+                <li key={l.to}>
+                  <Link to={l.to}>{l.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <nav className="foot__col" aria-label="Capabilities">
-          <h2 className="foot__head">Capabilities</h2>
-          <ul>
-            {CAPABILITIES.map((l) => (
-              <li key={l.label}>
-                <Link to={l.to}>{l.label}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          <nav className="foot__col" aria-label="Capabilities">
+            <h2 className="foot__head">Capabilities</h2>
+            <ul>
+              {CAPABILITIES.map((l) => (
+                <li key={l.label}>
+                  <Link to={l.to}>{l.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
-        <nav className="foot__col" aria-label="Social">
-          <h2 className="foot__head">Connect</h2>
-          <ul>
-            {SOCIAL.map((l) => (
-              <li key={l.label}>
-                <a href={l.href} target="_blank" rel="noreferrer noopener">
-                  {l.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+          <nav className="foot__col" aria-label="Social">
+            <h2 className="foot__head">Connect</h2>
+            <ul>
+              {SOCIAL.map((l) => (
+                <li key={l.label}>
+                  <a href={l.href} target="_blank" rel="noreferrer noopener">
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="foot__col">
+            <h2 className="foot__head">Contact</h2>
+            <address className="foot__addr">
+              {CONTACT_INFO.addressLines.map((line) => (
+                <span key={line}>{line}</span>
+              ))}
+            </address>
+            <ul className="foot__contactLinks">
+              {CONTACT_INFO.phones.map((p) => (
+                <li key={p}>
+                  <a href={phoneHref(p)}>{p}</a>
+                </li>
+              ))}
+              {CONTACT_INFO.emails.map((e) => (
+                <li key={e}>
+                  <a href={`mailto:${e}`}>{e}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div className="foot__bar shell">

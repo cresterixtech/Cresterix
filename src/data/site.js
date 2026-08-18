@@ -331,3 +331,13 @@ export const TIMELINES = [
   "6+ months",
   "Still planning",
 ];
+
+/* Contact details — used by the footer and the contact page. */
+export const CONTACT_INFO = {
+  addressLines: ["Kanjiramkulam", "Trivandrum, Kerala 695524", "India"],
+  phones: ["+91 97785 07115", "+91 96450 89905"],
+  emails: ["hello@cresterix.com", "cresterixtech@gmail.com"],
+};
+
+/** tel: hrefs need digits and a leading + only — strip the display spacing. */
+export const phoneHref = (phone) => `tel:${phone.replace(/[^\d+]/g, "")}`;

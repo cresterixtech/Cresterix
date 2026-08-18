@@ -12,6 +12,63 @@
 }
 
 /* ---- Form ---------------------------------------------------------- */
+
+/* <fieldset> ships with its own border, padding and min-width: auto,
+   which would otherwise both add unwanted chrome and stop the grid
+   inside it from shrinking below its content's natural width. */
+.form__fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+/* ---- "Coming soon" state -------------------------------------------
+   The fieldset's native `disabled` already strips every control from
+   the tab order and the accessibility tree — the blur and overlay
+   below are the visual layer on top of that, not a substitute for it. */
+.form__panel {
+  position: relative;
+}
+.form__panel.is-soon .form__fieldset {
+  filter: blur(6px);
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+}
+
+.form__soon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  text-align: center;
+  padding: clamp(1.5rem, 1rem + 2.4vw, 3rem);
+  border: 1px solid var(--line-mid);
+  border-radius: var(--r);
+  background: rgb(5 7 10 / 38%);
+  backdrop-filter: blur(3px);
+}
+.form__soonTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 1.05rem + 1.3vw, 1.9rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  max-width: 24ch;
+}
+.form__soonBody {
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+  max-width: 32ch;
+}
+.form__soonCta {
+  margin-top: 0.4rem;
+}
+
 .form__grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -249,11 +306,44 @@
 .contact__list li:last-child {
   border-bottom: none;
 }
+/* Only the "Reach us directly" block puts links in here — the
+   Engagement-models list is plain text and unaffected. */
+.contact__list a {
+  color: inherit;
+  overflow-wrap: anywhere;
+  transition: color var(--d) var(--ease-out);
+}
+.contact__list a:hover {
+  color: var(--accent-text);
+}
+
+/* Called out from the rest of the aside — with the form disabled this
+   is the primary way to reach us, so it earns its own frame rather
+   than reading as just another list. Sized within the aside's existing
+   padding rather than bleeding to its edge, so it never has to match
+   that padding's own clamp() by hand. */
+.contact__block--direct {
+  padding: clamp(1rem, 0.8rem + 0.8vw, 1.4rem);
+  border: 1px solid var(--line-mid);
+  border-radius: var(--r);
+  background: rgb(47 107 255 / 5%);
+}
+
+.contact__addr {
+  display: block;
+  font-style: normal;
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+  line-height: var(--lh-relaxed);
+  margin-top: 0.9rem;
+}
 
 .contact__meta {
+  display: block;
   font-family: var(--font-mono);
   font-size: var(--fs-mono-sm);
   letter-spacing: var(--tracking-mono);
   text-transform: uppercase;
   color: var(--ink-dim);
+  margin-top: 0.7rem;
 }

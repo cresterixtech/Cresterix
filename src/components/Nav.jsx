@@ -11,7 +11,6 @@ const LINKS = [
   { to: "/work", label: "Work" },
   { to: "/about", label: "About" },
   { to: "/insights", label: "Insights" },
-  { to: "/contact", label: "Contact" },
 ];
 
 /* ------------------------------------------------------------------
@@ -86,7 +85,7 @@ export default function Nav() {
 
           <div className="nav__actions">
             <Button to="/contact" variant="primary" className="nav__cta">
-              Start a Project
+              Contact
             </Button>
             <button
               className={`nav__burger ${open ? "is-open" : ""}`}
@@ -120,7 +119,7 @@ export default function Nav() {
         </nav>
         <div className="menu__foot">
           <Button to="/contact" variant="primary">
-            Start a Project
+            Contact
           </Button>
           <p className="menu__meta">India · Global Delivery</p>
         </div>
