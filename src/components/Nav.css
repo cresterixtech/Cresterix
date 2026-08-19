@@ -156,18 +156,27 @@
   transform: translateY(-3.75px) rotate(-45deg);
 }
 
-/* ---- Mobile menu ------------------------------------------------ */
+/* ---- Mobile menu -------------------------------------------------
+   Sits *below* the header in the stacking order (not above it as
+   z-index alone would suggest) so the logo and the burger's own X
+   state stay visible and clickable while the menu is open — without
+   that, closing the menu had no visible control at all. */
+/* Split in two: .menu is a non-scrolling clipping shell (so the
+   watermark below can safely bleed past its own edge), and
+   .menu__scroll is the actual scroll container inside it. Collapsing
+   these into one element made the watermark's overhang inflate the
+   scrollable area itself — on a 390x844 phone that alone added ~70px
+   of scroll with nothing reachable in it. */
 .menu {
   position: fixed;
   inset: 0;
   width: var(--bleed);
-  z-index: var(--z-overlay);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--s-7);
-  padding: calc(var(--nav-h) + 2rem) var(--gutter) 2.5rem;
-  background: rgb(5 7 10 / 96%);
+  z-index: calc(var(--z-nav) - 1);
+  overflow: hidden;
+  background:
+    radial-gradient(120% 65% at 88% -8%, rgb(47 107 255 / 14%), transparent 58%),
+    radial-gradient(90% 55% at -10% 105%, rgb(70 216 232 / 8%), transparent 60%),
+    linear-gradient(180deg, rgb(5 7 10 / 93%), rgb(5 7 10 / 98%));
   backdrop-filter: blur(24px);
   opacity: 0;
   pointer-events: none;
@@ -181,54 +190,166 @@
   display: none;
 }
 
+/* The crest, oversized and faint, in the corner it always occupies
+   across the site — the menu reads as part of the same world instead
+   of a plain flat panel dropped on top of it. Deliberately outside
+   .menu__scroll: .menu clips it (overflow: hidden) instead of
+   scrolling it. */
+.menu__watermark {
+  position: absolute;
+  right: -8%;
+  bottom: -6%;
+  height: 62vh;
+  min-height: 22rem;
+  opacity: 0.05;
+  color: var(--ink);
+  pointer-events: none;
+  transform: rotate(-6deg);
+}
+
+.menu__scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+}
+
+.menu__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* `safe` keeps the top of the list reachable by scroll if content
+     ever runs taller than the viewport; browsers that don't parse the
+     two-value form drop this line and keep the plain `center` above. */
+  justify-content: safe center;
+  gap: var(--s-5);
+  min-height: 100%;
+  padding: calc(var(--nav-h) + 1.25rem) var(--gutter) 1.75rem;
+}
+
 .menu__links {
   display: flex;
   flex-direction: column;
   border-top: 1px solid var(--line);
 }
 .menu__link {
+  position: relative;
   display: flex;
   align-items: baseline;
   gap: 1.15rem;
-  padding-block: clamp(0.9rem, 0.4rem + 1.6vw, 1.4rem);
+  padding-block: clamp(0.65rem, 0.2rem + 1.4vw, 1.2rem);
+  padding-inline-start: 1rem;
+  margin-inline-start: -1rem;
   border-bottom: 1px solid var(--line);
   opacity: 0;
   transform: translateY(14px);
   transition:
     opacity 560ms var(--ease-out) calc(var(--i) * 55ms + 100ms),
     transform 560ms var(--ease-out) calc(var(--i) * 55ms + 100ms),
-    color var(--d) var(--ease-out);
+    background-color var(--d) var(--ease-out);
 }
 .menu.is-open .menu__link {
   opacity: 1;
   transform: none;
+}
+.menu__link:hover,
+.menu__link:focus-visible {
+  background: rgb(231 234 239 / 4%);
+}
+/* Left accent bar: the same idea as the desktop underline, rotated
+   90deg to suit a stacked list instead of an inline row. */
+.menu__link::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.9rem;
+  bottom: 0.9rem;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 420ms var(--ease-out);
+}
+.menu__link:hover::before,
+.menu__link:focus-visible::before,
+.menu__link.is-active::before {
+  transform: scaleY(1);
 }
 .menu__num {
   font-family: var(--font-mono);
   font-size: var(--fs-mono-sm);
   letter-spacing: var(--tracking-mono);
   color: var(--accent-text);
+  flex: none;
 }
 .menu__label {
   font-family: var(--font-display);
   font-size: clamp(1.75rem, 1.1rem + 4vw, 3rem);
   letter-spacing: var(--tracking-display);
   line-height: 1;
+  transition: color var(--d) var(--ease-out);
 }
-.menu__link:hover .menu__label {
+.menu__link:hover .menu__label,
+.menu__link.is-active .menu__label {
   color: var(--ink);
+}
+.menu__arrow {
+  width: 1.1em;
+  height: 1.1em;
+  margin-left: auto;
+  flex: none;
+  color: var(--accent-text);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity var(--d) var(--ease-out), transform var(--d) var(--ease-out);
+}
+.menu__link:hover .menu__arrow,
+.menu__link:focus-visible .menu__arrow {
+  opacity: 1;
+  transform: none;
 }
 
 .menu__foot {
   display: flex;
   flex-direction: column;
-  gap: 1.15rem;
+  gap: 1.1rem;
   align-items: flex-start;
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--line);
 }
-.menu__meta {
+.menu__footMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+.menu__loc {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   font-family: var(--font-mono);
   font-size: var(--fs-mono-sm);
   letter-spacing: var(--tracking-mono);
   text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.menu__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 0 3px rgb(70 216 232 / 14%);
+  flex: none;
+}
+.menu__quick {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.1rem;
+}
+.menu__quick a {
+  font-size: var(--fs-sm);
   color: var(--ink-mute);
+  transition: color var(--d) var(--ease-out);
+}
+.menu__quick a:hover {
+  color: var(--ink);
 }

@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
-import Logo from "./Logo";
+import Logo, { Mark } from "./Logo";
 import Button from "./Button";
 import { stage } from "../lib/stage";
+import { CONTACT_INFO, phoneHref } from "../data/site";
 import "./Nav.css";
 
 const LINKS = [
@@ -64,7 +65,7 @@ export default function Nav() {
   return (
     <>
       <header
-        className={`nav ${solid ? "is-solid" : ""} ${hidden && !open ? "is-hidden" : ""}`}
+        className={`nav ${solid || open ? "is-solid" : ""} ${hidden && !open ? "is-hidden" : ""}`}
       >
         <div className="nav__inner">
           <Link to="/" className="nav__logo" aria-label="Cresterix home">
@@ -103,25 +104,53 @@ export default function Nav() {
       </header>
 
       <div id="mobile-menu" className={`menu ${open ? "is-open" : ""}`} hidden={!open}>
-        <nav className="menu__links" aria-label="Mobile">
-          {LINKS.map((l, i) => (
-            <NavLink
-              key={l.to}
-              to={l.to}
-              className="menu__link"
-              style={{ "--i": i }}
-              onClick={() => setOpen(false)}
-            >
-              <span className="menu__num">{String(i + 1).padStart(2, "0")}</span>
-              <span className="menu__label">{l.label}</span>
-            </NavLink>
-          ))}
-        </nav>
-        <div className="menu__foot">
-          <Button to="/contact" variant="primary">
-            Contact
-          </Button>
-          <p className="menu__meta">India · Global Delivery</p>
+        <Mark className="menu__watermark" aria-hidden="true" />
+
+        <div className="menu__scroll">
+          <div className="menu__body">
+            <span className="eyebrow menu__eyebrow">Navigate</span>
+
+            <nav className="menu__links" aria-label="Mobile">
+              {LINKS.map((l, i) => (
+                <NavLink
+                  key={l.to}
+                  to={l.to}
+                  className={({ isActive }) => `menu__link ${isActive ? "is-active" : ""}`}
+                  style={{ "--i": i }}
+                  onClick={() => setOpen(false)}
+                >
+                  <span className="menu__num">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="menu__label">{l.label}</span>
+                  <svg className="menu__arrow" viewBox="0 0 16 16" aria-hidden="true">
+                    <path
+                      d="M2 8h11M9 4l4 4-4 4"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.4"
+                      strokeLinecap="square"
+                    />
+                  </svg>
+                </NavLink>
+              ))}
+            </nav>
+
+            <div className="menu__foot">
+              <Button to="/contact" variant="primary" onClick={() => setOpen(false)}>
+                Contact
+              </Button>
+
+              <div className="menu__footMeta">
+                <p className="menu__loc">
+                  <span className="menu__dot" aria-hidden="true" />
+                  India · Global Delivery
+                </p>
+                <div className="menu__quick">
+                  <a href={phoneHref(CONTACT_INFO.phones[0])}>{CONTACT_INFO.phones[0]}</a>
+                  <a href={`mailto:${CONTACT_INFO.emails[0]}`}>{CONTACT_INFO.emails[0]}</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>
