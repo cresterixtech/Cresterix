@@ -157,154 +157,154 @@
 }
 
 /* ---- Mobile menu -------------------------------------------------
-   Sits *below* the header in the stacking order (not above it as
-   z-index alone would suggest) so the logo and the burger's own X
-   state stay visible and clickable while the menu is open — without
+   A compact panel that drops from under the header, not a full-screen
+   takeover: the page stays visible behind a scrim, so the menu reads
+   as a control rather than a destination.
+
+   The layer sits *below* the header in the stacking order (not above
+   it as z-index alone would suggest) so the logo and the burger's own
+   X state stay visible and clickable while the menu is open — without
    that, closing the menu had no visible control at all. */
-/* Split in two: .menu is a non-scrolling clipping shell (so the
-   watermark below can safely bleed past its own edge), and
-   .menu__scroll is the actual scroll container inside it. Collapsing
-   these into one element made the watermark's overhang inflate the
-   scrollable area itself — on a 390x844 phone that alone added ~70px
-   of scroll with nothing reachable in it. */
 .menu {
   position: fixed;
   inset: 0;
   width: var(--bleed);
   z-index: calc(var(--z-nav) - 1);
-  overflow: hidden;
-  background:
-    radial-gradient(120% 65% at 88% -8%, rgb(47 107 255 / 14%), transparent 58%),
-    radial-gradient(90% 55% at -10% 105%, rgb(70 216 232 / 8%), transparent 60%),
-    linear-gradient(180deg, rgb(5 7 10 / 93%), rgb(5 7 10 / 98%));
-  backdrop-filter: blur(24px);
-  opacity: 0;
   pointer-events: none;
-  transition: opacity 420ms var(--ease-out);
-}
-.menu.is-open {
-  opacity: 1;
-  pointer-events: auto;
 }
 .menu[hidden] {
   display: none;
 }
-
-/* The crest, oversized and faint, in the corner it always occupies
-   across the site — the menu reads as part of the same world instead
-   of a plain flat panel dropped on top of it. Deliberately outside
-   .menu__scroll: .menu clips it (overflow: hidden) instead of
-   scrolling it. */
-.menu__watermark {
-  position: absolute;
-  right: -8%;
-  bottom: -6%;
-  height: 62vh;
-  min-height: 22rem;
-  opacity: 0.05;
-  color: var(--ink);
-  pointer-events: none;
-  transform: rotate(-6deg);
+/* Belt-and-braces with the matchMedia close in Nav.jsx: the burger is
+   gone at this width, so the panel must never be paintable here. */
+@media (min-width: 1060px) {
+  .menu {
+    display: none;
+  }
 }
 
-.menu__scroll {
+.menu__scrim {
   position: absolute;
   inset: 0;
-  overflow-y: auto;
+  background: rgb(5 7 10 / 62%);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--d) var(--ease-out);
+}
+.menu.is-open .menu__scrim {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-.menu__body {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* `safe` keeps the top of the list reachable by scroll if content
-     ever runs taller than the viewport; browsers that don't parse the
-     two-value form drop this line and keep the plain `center` above. */
-  justify-content: safe center;
-  gap: var(--s-5);
-  min-height: 100%;
-  padding: calc(var(--nav-h) + 1.25rem) var(--gutter) 1.75rem;
+/* Anchored under the burger it belongs to. `left` and `right` both set
+   with a max-width means `margin-left: auto` resolves the free space to
+   the left — the panel hugs the right edge but still narrows to the
+   gutter on a small handset instead of overflowing it. */
+.menu__panel {
+  position: absolute;
+  top: calc(var(--nav-h) + 0.5rem);
+  left: var(--gutter);
+  right: var(--gutter);
+  margin-left: auto;
+  max-width: 20rem;
+  max-height: calc(100vh - var(--nav-h) - 2rem);
+  max-height: calc(100dvh - var(--nav-h) - 2rem);
+  overflow-y: auto;
+  padding: 0.5rem;
+  border: 1px solid var(--line-mid);
+  border-radius: var(--r-lg);
+  background: linear-gradient(180deg, rgb(18 24 34 / 96%), rgb(13 17 23 / 97%));
+  box-shadow: 0 24px 60px rgb(0 0 0 / 55%);
+  opacity: 0;
+  transform: translateY(-10px) scale(0.98);
+  transform-origin: top right;
+  pointer-events: none;
+  transition:
+    opacity var(--d) var(--ease-out),
+    transform var(--d) var(--ease-out);
+}
+.menu.is-open .menu__panel {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
 }
 
 .menu__links {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid var(--line);
 }
 .menu__link {
   position: relative;
   display: flex;
-  align-items: baseline;
-  gap: 1.15rem;
-  padding-block: clamp(0.65rem, 0.2rem + 1.4vw, 1.2rem);
-  padding-inline-start: 1rem;
-  margin-inline-start: -1rem;
-  border-bottom: 1px solid var(--line);
+  align-items: center;
+  gap: 0.75rem;
+  /* 0.8rem keeps each row at a 44px touch target while staying compact. */
+  padding: 0.8rem 0.75rem;
+  border-radius: var(--r);
+  color: var(--ink-dim);
   opacity: 0;
-  transform: translateY(14px);
+  transform: translateY(-4px);
   transition:
-    opacity 560ms var(--ease-out) calc(var(--i) * 55ms + 100ms),
-    transform 560ms var(--ease-out) calc(var(--i) * 55ms + 100ms),
-    background-color var(--d) var(--ease-out);
+    opacity 320ms var(--ease-out) calc(var(--i) * 32ms + 90ms),
+    transform 320ms var(--ease-out) calc(var(--i) * 32ms + 90ms),
+    background-color var(--d-fast) var(--ease-out),
+    color var(--d-fast) var(--ease-out);
 }
 .menu.is-open .menu__link {
   opacity: 1;
   transform: none;
 }
 .menu__link:hover,
-.menu__link:focus-visible {
-  background: rgb(231 234 239 / 4%);
+.menu__link:focus-visible,
+.menu__link.is-active {
+  background: rgb(231 234 239 / 5%);
+  color: var(--ink);
 }
+
 /* Left accent bar: the same idea as the desktop underline, rotated
    90deg to suit a stacked list instead of an inline row. */
 .menu__link::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.9rem;
-  bottom: 0.9rem;
+  top: 0.55rem;
+  bottom: 0.55rem;
   width: 2px;
+  border-radius: var(--r-full);
   background: var(--accent);
   transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 420ms var(--ease-out);
+  transform-origin: center;
+  transition: transform var(--d) var(--ease-out);
 }
 .menu__link:hover::before,
 .menu__link:focus-visible::before,
 .menu__link.is-active::before {
   transform: scaleY(1);
 }
-.menu__num {
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono-sm);
-  letter-spacing: var(--tracking-mono);
-  color: var(--accent-text);
-  flex: none;
-}
+
 .menu__label {
   font-family: var(--font-display);
-  font-size: clamp(1.75rem, 1.1rem + 4vw, 3rem);
-  letter-spacing: var(--tracking-display);
-  line-height: 1;
-  transition: color var(--d) var(--ease-out);
-}
-.menu__link:hover .menu__label,
-.menu__link.is-active .menu__label {
-  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.2;
 }
 .menu__arrow {
-  width: 1.1em;
-  height: 1.1em;
+  width: 0.95em;
+  height: 0.95em;
   margin-left: auto;
   flex: none;
   color: var(--accent-text);
   opacity: 0;
-  transform: translateX(-6px);
-  transition: opacity var(--d) var(--ease-out), transform var(--d) var(--ease-out);
+  transform: translateX(-4px);
+  transition:
+    opacity var(--d-fast) var(--ease-out),
+    transform var(--d-fast) var(--ease-out);
 }
 .menu__link:hover .menu__arrow,
-.menu__link:focus-visible .menu__arrow {
+.menu__link:focus-visible .menu__arrow,
+.menu__link.is-active .menu__arrow {
   opacity: 1;
   transform: none;
 }
@@ -312,43 +312,40 @@
 .menu__foot {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
-  align-items: flex-start;
-  padding-top: var(--s-5);
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding: 0.85rem 0.75rem 0.4rem;
   border-top: 1px solid var(--line);
 }
-.menu__footMeta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
+/* Scoped one level up so this outranks the shared .btn rules
+   regardless of stylesheet injection order. */
+.menu .menu__cta {
+  width: 100%;
+  justify-content: center;
+  padding: 0.7rem 1rem;
 }
-.menu__loc {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  font-family: var(--font-mono);
-  font-size: var(--fs-mono-sm);
-  letter-spacing: var(--tracking-mono);
-  text-transform: uppercase;
-  color: var(--ink-dim);
-}
-.menu__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--cyan);
-  box-shadow: 0 0 0 3px rgb(70 216 232 / 14%);
-  flex: none;
+/* From 720px up the header shows its own Contact button, so the panel
+   would be repeating a control that is already on screen beside it. */
+@media (min-width: 720px) {
+  .menu .menu__cta {
+    display: none;
+  }
+  .menu__foot {
+    padding-top: 0.75rem;
+  }
 }
 .menu__quick {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1.1rem;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 .menu__quick a {
-  font-size: var(--fs-sm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
   color: var(--ink-mute);
-  transition: color var(--d) var(--ease-out);
+  overflow-wrap: anywhere;
+  transition: color var(--d-fast) var(--ease-out);
 }
 .menu__quick a:hover {
   color: var(--ink);

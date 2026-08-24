@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
-import Logo, { Mark } from "./Logo";
+import Logo from "./Logo";
 import Button from "./Button";
 import { stage } from "../lib/stage";
 import { CONTACT_INFO, phoneHref } from "../data/site";
@@ -48,6 +48,18 @@ export default function Nav() {
     setLastPath(pathname);
     if (open) setOpen(false);
   }
+
+  /* Crossing into the desktop layout removes the burger entirely. Without
+     this the menu would stay open with no control left to close it, and
+     the scroll lock below would never be released — reachable by simply
+     rotating a tablet. Breakpoint mirrors the 1060px one in Nav.css. */
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1060px)");
+    const sync = () => mq.matches && setOpen(false);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -106,52 +118,49 @@ export default function Nav() {
       </header>
 
       <div id="mobile-menu" className={`menu ${open ? "is-open" : ""}`} hidden={!open}>
-        <Mark className="menu__watermark" aria-hidden="true" />
+        {/* Tapping the ground outside the panel closes it. Escape and the
+            burger's own X do the same, so this is a convenience path
+            rather than the only way out — it needs no keyboard role. */}
+        <div className="menu__scrim" onClick={() => setOpen(false)} />
 
-        <div className="menu__scroll">
-          <div className="menu__body">
-            <span className="eyebrow menu__eyebrow">Navigate</span>
+        <div className="menu__panel">
+          <nav className="menu__links" aria-label="Mobile">
+            {LINKS.map((l, i) => (
+              <NavLink
+                key={l.to}
+                to={l.to}
+                end={l.to === "/"}
+                className={({ isActive }) => `menu__link ${isActive ? "is-active" : ""}`}
+                style={{ "--i": i }}
+                onClick={() => setOpen(false)}
+              >
+                <span className="menu__label">{l.label}</span>
+                <svg className="menu__arrow" viewBox="0 0 16 16" aria-hidden="true">
+                  <path
+                    d="M2 8h11M9 4l4 4-4 4"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.4"
+                    strokeLinecap="square"
+                  />
+                </svg>
+              </NavLink>
+            ))}
+          </nav>
 
-            <nav className="menu__links" aria-label="Mobile">
-              {LINKS.map((l, i) => (
-                <NavLink
-                  key={l.to}
-                  to={l.to}
-                  end={l.to === "/"}
-                  className={({ isActive }) => `menu__link ${isActive ? "is-active" : ""}`}
-                  style={{ "--i": i }}
-                  onClick={() => setOpen(false)}
-                >
-                  <span className="menu__num">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="menu__label">{l.label}</span>
-                  <svg className="menu__arrow" viewBox="0 0 16 16" aria-hidden="true">
-                    <path
-                      d="M2 8h11M9 4l4 4-4 4"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.4"
-                      strokeLinecap="square"
-                    />
-                  </svg>
-                </NavLink>
-              ))}
-            </nav>
+          <div className="menu__foot">
+            <Button
+              to="/contact"
+              variant="primary"
+              className="menu__cta"
+              onClick={() => setOpen(false)}
+            >
+              Contact
+            </Button>
 
-            <div className="menu__foot">
-              <Button to="/contact" variant="primary" onClick={() => setOpen(false)}>
-                Contact
-              </Button>
-
-              <div className="menu__footMeta">
-                <p className="menu__loc">
-                  <span className="menu__dot" aria-hidden="true" />
-                  India · Global Delivery
-                </p>
-                <div className="menu__quick">
-                  <a href={phoneHref(CONTACT_INFO.phones[0])}>{CONTACT_INFO.phones[0]}</a>
-                  <a href={`mailto:${CONTACT_INFO.emails[0]}`}>{CONTACT_INFO.emails[0]}</a>
-                </div>
-              </div>
+            <div className="menu__quick">
+              <a href={phoneHref(CONTACT_INFO.phones[0])}>{CONTACT_INFO.phones[0]}</a>
+              <a href={`mailto:${CONTACT_INFO.emails[0]}`}>{CONTACT_INFO.emails[0]}</a>
             </div>
           </div>
         </div>
