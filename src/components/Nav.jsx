@@ -7,6 +7,7 @@ import { CONTACT_INFO, phoneHref } from "../data/site";
 import "./Nav.css";
 
 const LINKS = [
+  { to: "/", label: "Home" },
   { to: "/solutions", label: "Solutions" },
   { to: "/industries", label: "Industries" },
   { to: "/work", label: "Work" },
@@ -77,6 +78,7 @@ export default function Nav() {
               <NavLink
                 key={l.to}
                 to={l.to}
+                end={l.to === "/"}
                 className={({ isActive }) => `nav__link ${isActive ? "is-active" : ""}`}
               >
                 <span>{l.label}</span>
@@ -115,6 +117,7 @@ export default function Nav() {
                 <NavLink
                   key={l.to}
                   to={l.to}
+                  end={l.to === "/"}
                   className={({ isActive }) => `menu__link ${isActive ? "is-active" : ""}`}
                   style={{ "--i": i }}
                   onClick={() => setOpen(false)}

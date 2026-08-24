@@ -21,7 +21,7 @@
 export const WORK = [
   {
     slug: "fm-android-app",
-    name: "FM Android App",
+    name: "FM Android & iOS App",
     subtitle: "Community Radio Streaming Platform",
     industry: "Media & Broadcasting",
     market: "India",
@@ -35,7 +35,7 @@ export const WORK = [
       "The station serves its community over the air, but an FM signal stops at the edge of its transmission radius — leaving listeners who had moved away, and a diaspora spread across the Gulf and beyond, cut off from their station. The station needed to reach them without a broadcast engineer on staff, without a recurring SMS gateway bill for account verification, and without asking presenters to learn anything more complicated than the studio equipment already in front of them.",
 
     solution:
-      "We delivered an Android application and the backend platform behind it as a single system. Listeners stream the live broadcast in real time, browse the weekly programme schedule, and talk to each other in live chat while a show is on air. The audio path runs independently of the application API, so a fault in one never silences the other — the app plays directly from a self-hosted streaming server while the API supplies only the surrounding metadata, such as the current show title and presenter. Station staff manage live programmes, schedules and accounts from an admin panel that requires no technical knowledge, with limited-permission logins for day-to-day operators.",
+      "We delivered an Android and iOS application and the backend platform behind it as a single system. Listeners stream the live broadcast in real time, browse the weekly programme schedule, and talk to each other in live chat while a show is on air. The audio path runs independently of the application API, so a fault in one never silences the other — the app plays directly from a self-hosted streaming server while the API supplies only the surrounding metadata, such as the current show title and presenter. Station staff manage live programmes, schedules and accounts from an admin panel that requires no technical knowledge, with limited-permission logins for day-to-day operators.",
 
     approach: [
       {
@@ -98,6 +98,7 @@ export const WORK = [
       "Flutter",
       "Dart",
       "Android",
+      "iOS",
       "Python",
       "Django",
       "Django REST Framework",
@@ -111,17 +112,17 @@ export const WORK = [
     ],
 
     result:
-      "The app is live on the Google Play Store, carrying the station's broadcast beyond its FM radius to listeners across 17 supported countries. Live programme information stays accurate to the minute, chat runs in real time during shows, and station staff manage the entire weekly schedule themselves through the admin panel. The platform was delivered with full documentation and handed over to the client, with every service configured to restart automatically and SSL certificates renewing without intervention.",
+      "The app is live on the Google Play Store and the Apple App Store, carrying the station's broadcast beyond its FM radius to listeners across 17 supported countries. Live programme information stays accurate to the minute, chat runs in real time during shows, and station staff manage the entire weekly schedule themselves through the admin panel. The platform was delivered with full documentation and handed over to the client, with every service configured to restart automatically and SSL certificates renewing without intervention.",
 
     /* Delivered capabilities, not invented metrics (§7).
        Kept to a similar length each so the strip reads as one even row
        rather than a ragged mix of one- and two-line cells. */
     facts: [
-      { k: "Platform", v: "Android (Flutter)" },
+      { k: "Platform", v: "Android & iOS (Flutter)" },
       { k: "Broadcast", v: "Live FM Radio" },
       { k: "Stream", v: "MP3 128 kbps" },
       { k: "Reach", v: "17 countries" },
-      { k: "Status", v: "Live on Google Play" },
+      { k: "Status", v: "Live on Google Play & App Store" },
     ],
 
     /* Privacy posture is a genuine selling point on this build. */
@@ -138,7 +139,7 @@ export const WORK = [
         width: 1536,
         height: 1024,
         alt:
-          "Four screens from the FM Android app: the live player with today's line-up, the weekly programme schedule, the phone-number login screen, and the live chat awaiting the next broadcast.",
+          "Four screens from the FM Android and iOS app: the live player with today's line-up, the weekly programme schedule, the phone-number login screen, and the live chat awaiting the next broadcast.",
         caption: "Live player, weekly schedule, account access and live chat.",
       },
     ],
