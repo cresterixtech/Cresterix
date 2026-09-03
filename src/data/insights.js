@@ -37,7 +37,7 @@ export const INSIGHTS = [
     topic: "Software Architecture",
     status: "published",
     date: "2026-08-12",
-    author: "Cresterix Engineering",
+    author: "Godson Morais",
     readingTime: 7,
     excerpt:
       "Most businesses should buy off-the-shelf software, not build it. Here are the four signals that genuinely justify building, and the four that don't.",
@@ -119,7 +119,7 @@ export const INSIGHTS = [
     topic: "SaaS",
     status: "published",
     date: "2026-08-26",
-    author: "Cresterix Engineering",
+    author: "Godson Morais",
     readingTime: 9,
     excerpt:
       "Scaling a SaaS product is rarely about traffic. It is about tenant isolation, background work and the decisions that get expensive to reverse later.",
@@ -210,7 +210,7 @@ export const INSIGHTS = [
     topic: "Business Automation",
     status: "published",
     date: "2026-09-02",
-    author: "Cresterix Engineering",
+    author: "Godson Morais",
     readingTime: 8,
     excerpt:
       "AI automation works on a narrower set of business tasks than the marketing suggests. Here is where it reliably pays back, and where it quietly fails.",

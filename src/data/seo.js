@@ -148,7 +148,9 @@ export function seoFor(pathname) {
         description: post.excerpt,
         datePublished: post.date,
         dateModified: post.updated ?? post.date,
-        author: { "@type": "Organization", name: post.author },
+        // Person, not Organization: a named human author is what
+        // Google's E-E-A-T signals actually look for on an article.
+        author: { "@type": "Person", name: post.author },
         publisher: { "@id": `${SITE_URL}/#organization` },
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         image: OG_IMAGE,
