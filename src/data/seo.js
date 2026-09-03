@@ -28,9 +28,8 @@ import { INSIGHTS } from "./insights.js";
 export const SITE_URL = "https://www.cresterix.com";
 
 /** Absolute, because crawlers and social scrapers do not resolve
- *  relative image paths. Square app icon for now — see README note on
- *  replacing this with a proper 1200x630 card. */
-export const OG_IMAGE = `${SITE_URL}/icon-512.png`;
+ *  relative image paths. Regenerate with scripts/generate-og-cover.py. */
+export const OG_IMAGE = `${SITE_URL}/og-cover.png`;
 
 export const DEFAULT_SEO = {
   title: `${BRAND.name} — ${BRAND.tagline}`,
