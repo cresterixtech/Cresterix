@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import Boot from "./components/Boot";
+import Seo from "./components/Seo";
 import Home from "./pages/Home";
 import { useStageDriver, setJourneyElement } from "./lib/useStageDriver";
 import { stage } from "./lib/stage";
@@ -22,6 +23,7 @@ const Work = lazy(() => import("./pages/Work"));
 const CaseStudy = lazy(() => import("./pages/CaseStudy"));
 const About = lazy(() => import("./pages/About"));
 const Insights = lazy(() => import("./pages/Insights"));
+const Article = lazy(() => import("./pages/Article"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Legal = lazy(() => import("./pages/Legal"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -111,6 +113,8 @@ export default function App() {
       )}
       <Boot />
 
+      <Seo />
+
       <div className="app">
         <Nav />
         <main id="main" key={pathname} className="page">
@@ -124,6 +128,7 @@ export default function App() {
               <Route path="/work/:slug" element={<CaseStudy />} />
               <Route path="/about" element={<About />} />
               <Route path="/insights" element={<Insights />} />
+              <Route path="/insights/:slug" element={<Article />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy" element={<Legal kind="privacy" />} />
               <Route path="/terms" element={<Legal kind="terms" />} />

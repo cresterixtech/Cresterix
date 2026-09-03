@@ -50,6 +50,28 @@
   }
 }
 
+/* Published rows are links; the whole row is the target. */
+.article--live:hover {
+  background: rgb(231 234 239 / 3%);
+}
+.article--live:hover .article__title {
+  color: var(--accent-text);
+}
+
+.article__excerpt {
+  font-size: var(--fs-sm);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-mute);
+  max-width: 62ch;
+  margin-top: 0.7rem;
+}
+
+.article__read {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--ink-mute);
+}
+
 .article__num {
   font-family: var(--font-mono);
   font-size: var(--fs-mono);
@@ -74,6 +96,7 @@
   letter-spacing: -0.032em;
   line-height: 1.12;
   max-width: 30ch;
+  transition: color var(--d) var(--ease-out);
 }
 
 .article__status {

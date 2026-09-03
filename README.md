@@ -70,7 +70,10 @@ with no verified challenge/solution/result copy. So:
   what is genuinely known; every unverified field renders as a visible
   "Awaiting verified content" gap. No placeholder numbers anywhere.
   Fill in `src/data/work.js` and set `status: "published"`.
-- **Insights** — the three article titles from §12, each marked `Planned`.
+- **Insights** — the three §12 titles are written and published; article bodies
+  live in `src/data/insights.js` as block arrays, rendered by `pages/Article.jsx`
+  at `/insights/:slug`. The topic taxonomy still lists five topics with no
+  article yet, which filter to an honest empty state.
 - **Privacy / Terms** — section structure only. Legal text must be written and
   reviewed by counsel; improvising it would be worse than leaving it empty.
 - **Social links** — placeholder URLs in `src/components/Footer.jsx`.

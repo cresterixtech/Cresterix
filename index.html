@@ -5,19 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#05070A" />
 
-    <title>Cresterix — The Crest of Digital Solutions</title>
+    <!-- Pre-JS fallback only. src/components/Seo.jsx overwrites the
+         title, description, canonical and social tags per route once
+         React mounts — these tags are mutated in place, not duplicated. -->
+    <title>Cresterix — Digital Product Engineering Company</title>
     <meta name="description" content="Cresterix is a digital product engineering company building intelligent software, scalable platforms and digital experiences for businesses worldwide." />
+    <link rel="canonical" href="https://cresterix.com/" />
+    <meta name="robots" content="index, follow" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
+    <!-- Absolute URLs: social scrapers and crawlers do not resolve
+         relative image paths. -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Cresterix — The Crest of Digital Solutions" />
+    <meta property="og:site_name" content="Cresterix" />
+    <meta property="og:title" content="Cresterix — Digital Product Engineering Company" />
     <meta property="og:description" content="We don't just build software. We engineer digital products that move businesses forward." />
-    <meta property="og:image" content="/icon-512.png" />
+    <meta property="og:url" content="https://cresterix.com/" />
+    <meta property="og:image" content="https://cresterix.com/icon-512.png" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cresterix — Digital Product Engineering Company" />
+    <meta name="twitter:description" content="We don't just build software. We engineer digital products that move businesses forward." />
+    <meta name="twitter:image" content="https://cresterix.com/icon-512.png" />
+
+    <!-- Structured data lives here rather than in a component so it is
+         readable without executing JavaScript — this is a client-rendered
+         SPA, so the pre-render body is otherwise empty.
+         TODO: add "sameAs" with the real LinkedIn/Instagram/GitHub
+         profile URLs once they exist. Omitted deliberately rather than
+         pointing at the placeholder links still in Footer.jsx. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "@id": "https://cresterix.com/#organization",
+        "name": "Cresterix",
+        "url": "https://cresterix.com",
+        "logo": "https://cresterix.com/icon-512.png",
+        "image": "https://cresterix.com/icon-512.png",
+        "description": "Cresterix is a digital product engineering company building intelligent software, scalable platforms and digital experiences for businesses worldwide.",
+        "slogan": "The Crest of Digital Solutions",
+        "email": "hello@cresterix.com",
+        "telephone": "+919778507115",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Kanjiramkulam",
+          "addressLocality": "Trivandrum",
+          "addressRegion": "Kerala",
+          "postalCode": "695524",
+          "addressCountry": "IN"
+        },
+        "areaServed": ["IN", "Worldwide"],
+        "knowsAbout": [
+          "Product Engineering",
+          "Web Platforms",
+          "Mobile Application Development",
+          "SaaS Development",
+          "AI and Intelligent Systems",
+          "Cloud and Backend Engineering"
+        ]
+      }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

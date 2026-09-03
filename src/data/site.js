@@ -271,38 +271,10 @@ export const ENGAGEMENT = [
   },
 ];
 
-/* §12 — Insights ---------------------------------------------------- */
-export const INSIGHT_TOPICS = [
-  "AI",
-  "Software Architecture",
-  "SaaS",
-  "Cybersecurity",
-  "Cloud",
-  "Business Automation",
-  "Mobile Development",
-  "Digital Transformation",
-];
-
-export const INSIGHTS = [
-  {
-    slug: "automate-manual-workflows-with-ai",
-    title: "How Businesses Can Automate Manual Workflows With AI",
-    topic: "Business Automation",
-    status: "planned",
-  },
-  {
-    slug: "scalable-saas-architecture",
-    title: "Building a Scalable SaaS Architecture",
-    topic: "SaaS",
-    status: "planned",
-  },
-  {
-    slug: "when-to-build-custom-software",
-    title: "When Should a Business Build Custom Software?",
-    topic: "Software Architecture",
-    status: "planned",
-  },
-];
+/* §12 — Insights moved to src/data/insights.js when the articles were
+   written; the bodies are long enough that keeping them here would
+   have made this file hard to read. Import INSIGHTS and
+   INSIGHT_TOPICS from there. */
 
 /* §13 — Contact form ------------------------------------------------ */
 export const PROJECT_TYPES = [

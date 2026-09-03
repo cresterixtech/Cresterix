@@ -1,0 +1,253 @@
+/* ---- Article hero -------------------------------------------------- */
+.art__hero {
+  padding-top: calc(var(--nav-h) + var(--s-8));
+  padding-bottom: var(--s-7);
+}
+.art__heroInner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-4);
+}
+
+.art__back {
+  margin-bottom: var(--s-2);
+}
+
+.art__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.3rem + 3.4vw, 3.6rem);
+  font-weight: 300;
+  letter-spacing: var(--tracking-display);
+  line-height: 1.06;
+  max-width: 22ch;
+}
+
+.art__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.art__excerpt {
+  max-width: 60ch;
+}
+
+/* ---- Contents ------------------------------------------------------ */
+.art__toc {
+  margin-bottom: var(--s-7);
+  padding: clamp(1.1rem, 0.9rem + 0.9vw, 1.6rem);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: rgb(231 234 239 / 2.5%);
+}
+.art__tocHead {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: var(--s-4);
+}
+.art__tocList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  counter-reset: toc;
+  list-style: none;
+}
+.art__tocList li {
+  counter-increment: toc;
+  display: flex;
+  gap: 0.75rem;
+  align-items: baseline;
+}
+.art__tocList li::before {
+  content: counter(toc, decimal-leading-zero);
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  color: var(--accent-text);
+  flex: none;
+}
+.art__tocList a {
+  font-size: var(--fs-sm);
+  color: var(--ink-dim);
+  transition: color var(--d) var(--ease-out);
+}
+.art__tocList a:hover {
+  color: var(--ink);
+}
+
+/* ---- Prose ---------------------------------------------------------
+   Measure is capped well below the container width: long-form body
+   copy reads badly past roughly 70 characters a line. */
+.prose {
+  max-width: 68ch;
+}
+
+.prose__p {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-dim);
+  margin-bottom: var(--s-5);
+}
+
+/* Scroll target sits clear of the fixed header when jumped to from
+   the contents list. */
+.prose__h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 1.1rem + 1.5vw, 2rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.14;
+  color: var(--ink);
+  margin-top: var(--s-7);
+  margin-bottom: var(--s-4);
+  scroll-margin-top: calc(var(--nav-h) + 1.5rem);
+}
+.prose > .prose__h2:first-child {
+  margin-top: 0;
+}
+
+.prose__ul,
+.prose__ol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-4);
+  margin-bottom: var(--s-5);
+  padding-left: 0;
+  list-style: none;
+}
+.prose__ul li,
+.prose__ol li {
+  position: relative;
+  padding-left: 2.1rem;
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  color: var(--ink-dim);
+}
+
+.prose__ul li::before {
+  content: "";
+  position: absolute;
+  left: 0.6rem;
+  top: 0.72em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-text);
+}
+
+.prose__ol {
+  counter-reset: prose;
+}
+.prose__ol li {
+  counter-increment: prose;
+}
+.prose__ol li::before {
+  content: counter(prose, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  line-height: var(--lh-relaxed);
+  letter-spacing: var(--tracking-mono);
+  color: var(--accent-text);
+}
+
+.prose__callout {
+  display: block;
+  margin-block: var(--s-6);
+}
+
+/* ---- More insights -------------------------------------------------- */
+.art__moreHead {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.art__more {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1px;
+  background: var(--line);
+  border-bottom: 1px solid var(--line);
+}
+@media (min-width: 760px) {
+  .art__more {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.artcard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: var(--s-5) 0;
+  background: var(--base);
+  transition: background-color var(--d) var(--ease-out);
+}
+@media (min-width: 760px) {
+  .artcard {
+    padding: var(--s-5);
+  }
+}
+.artcard:hover {
+  background: var(--surface-1);
+}
+
+.artcard__topic {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.artcard__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: var(--ink);
+  max-width: 26ch;
+}
+.artcard__meta {
+  font-family: var(--font-mono);
+  font-size: var(--fs-mono-sm);
+  letter-spacing: var(--tracking-mono);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: auto;
+  padding-top: 0.4rem;
+}
+
+/* ---- CTA ------------------------------------------------------------ */
+.art__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-5);
+}
+.art__ctaTitle {
+  font-size: clamp(1.7rem, 1.2rem + 2.4vw, 3rem);
+  font-weight: 300;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  max-width: 24ch;
+}

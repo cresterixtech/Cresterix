@@ -29,6 +29,10 @@ export default function About() {
               thoughtful product thinking with modern engineering to create technology
               that delivers meaningful business value.
             </Reveal>
+            <Reveal className="about__para" delay={220}>
+              We work from Trivandrum, Kerala, engineering software for clients across
+              India and internationally.
+            </Reveal>
           </div>
         </section>
 
