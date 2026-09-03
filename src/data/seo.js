@@ -21,7 +21,11 @@ import { BRAND } from "./site.js";
 import { WORK } from "./work.js";
 import { INSIGHTS } from "./insights.js";
 
-export const SITE_URL = "https://cresterix.com";
+/* The apex 301-redirects to www, so www is the canonical host. Every
+   canonical tag, og:url and sitemap <loc> must name the host that
+   actually serves the page — pointing them at a redirecting URL is
+   what made Search Console report "Couldn't fetch" on the sitemap. */
+export const SITE_URL = "https://www.cresterix.com";
 
 /** Absolute, because crawlers and social scrapers do not resolve
  *  relative image paths. Square app icon for now — see README note on
