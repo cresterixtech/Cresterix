@@ -338,6 +338,16 @@
   color: var(--ink-dim);
   font-size: var(--fs-sm);
 }
+/* Article excerpts run ~150 characters where a case-study subtitle runs
+   ~30, which would leave these rows several lines taller than the work
+   rows above and pull the baseline alignment apart. */
+.workrow--article .workrow__sub {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 .workrow__meta,
 .workrow__go {
   font-family: var(--font-mono);

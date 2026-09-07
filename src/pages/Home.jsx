@@ -7,6 +7,7 @@ import { setJourneyElement } from "../lib/useStageDriver";
 import { stage } from "../lib/stage";
 import { CAPABILITIES, PROCESS, TECH, SECURITY, ENGAGEMENT } from "../data/site";
 import { WORK, isPublished } from "../data/work";
+import { sortedInsights, isPublished as isArticleLive } from "../data/insights";
 import "./Home.css";
 
 /* ------------------------------------------------------------------
@@ -19,6 +20,7 @@ import "./Home.css";
 
 export default function Home() {
   const journey = useRef(null);
+  const latestInsights = sortedInsights().filter(isArticleLive).slice(0, 3);
 
   useEffect(() => {
     setJourneyElement(journey.current);
@@ -341,6 +343,53 @@ export default function Home() {
             </RevealGroup>
           </div>
         </section>
+
+        {/* Insights.
+            Also the articles' only link from an indexed page: Search
+            Console had all three sitting in "Discovered - currently not
+            indexed", and nothing on the home page pointed at them. */}
+        {latestInsights.length > 0 && (
+          <section className="section">
+            <div className="shell">
+              <div className="sechead sechead--split">
+                <div>
+                  <Reveal className="eyebrow">Insights</Reveal>
+                  <RevealLines
+                    as="h2"
+                    className="sechead__title"
+                    start={90}
+                    lines={["Thinking Out Loud."]}
+                  />
+                </div>
+                <Reveal className="sechead__aside lead" delay={220}>
+                  Practical writing on the decisions behind the software we build —
+                  what we would tell a client before they commit budget.
+                </Reveal>
+              </div>
+
+              <RevealGroup className="worklist" step={80}>
+                {latestInsights.map((a) => (
+                  <Link
+                    to={`/insights/${a.slug}`}
+                    className="workrow workrow--article"
+                    key={a.slug}
+                  >
+                    <span className="workrow__name">{a.title}</span>
+                    <span className="workrow__sub">{a.excerpt}</span>
+                    <span className="workrow__meta">{a.topic}</span>
+                    <span className="workrow__go" aria-hidden="true">
+                      {a.readingTime} min read
+                    </span>
+                  </Link>
+                ))}
+              </RevealGroup>
+
+              <Reveal className="work__more" delay={180}>
+                <TextLink to="/insights">All insights</TextLink>
+              </Reveal>
+            </div>
+          </section>
+        )}
       </div>
       </div>
 
