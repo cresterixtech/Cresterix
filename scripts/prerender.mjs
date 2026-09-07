@@ -95,7 +95,29 @@ for (const path of paths) {
   written++;
 }
 
+/* ---- _redirects --------------------------------------------------
+   Cloudflare Pages' SPA catch-all answers extensionless paths with
+   index.html *before* it resolves /solutions/ -> /solutions/index.html.
+   The result: /solutions/ served the right page but /solutions served
+   the homepage — and the bare form is exactly what the sitemap and
+   every canonical tag point at, so all 13 URLs returned identical
+   homepage content to crawlers.
+
+   Explicit 200 rewrites, listed before the catch-all, pin each clean
+   URL to its prerendered file. First match wins, and the trailing
+   catch-all still hands unknown paths to the client router for the
+   404 page. */
+const redirects = [
+  ...paths
+    .filter((p) => p !== "/")
+    .map((p) => `${p}  ${p}/index.html  200`),
+  "/*  /index.html  200",
+].join("\n");
+
+writeFileSync(join(dist, "_redirects"), `${redirects}\n`, "utf8");
+
 console.log(`prerendered ${written} routes`);
+console.log(`_redirects: ${paths.length - 1} explicit rewrites + catch-all`);
 console.log(`thinnest page: ${shortest.path} (${shortest.chars} chars of text)`);
 
 // A page that renders almost nothing means a Suspense boundary was
