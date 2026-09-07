@@ -5,7 +5,10 @@ import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  // dist-ssr is the prerender build's output — generated bundle code,
+  // not source, and it inlines src/three/ where the immutability rule
+  // is deliberately off (see the block at the bottom of this file).
+  globalIgnores(['dist', 'dist-ssr']),
   {
     files: ['**/*.{js,jsx}'],
     extends: [
@@ -19,8 +22,14 @@ export default defineConfig([
     },
   },
   {
-    // Build config runs in Node, not the browser.
-    files: ['vite.config.js', 'eslint.config.js'],
+    // Build config runs in Node, not the browser. So does the prerender
+    // entry and the generator scripts it feeds.
+    files: [
+      'vite.config.js',
+      'eslint.config.js',
+      'src/entry-server.jsx',
+      'scripts/**/*.mjs',
+    ],
     languageOptions: { globals: globals.node },
   },
   {

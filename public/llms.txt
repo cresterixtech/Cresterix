@@ -1,0 +1,28 @@
+# Cresterix
+
+> Cresterix is a digital product engineering company building intelligent software, scalable platforms and digital experiences for businesses worldwide.
+
+We don't just build software. We engineer digital products that move businesses forward. Based in Trivandrum, Kerala, India, working with clients internationally.
+
+## Pages
+
+- [Software Development Services — Web, Mobile, SaaS, AI](https://www.cresterix.com/solutions): Product engineering, web platforms, mobile apps, SaaS, AI and cloud services. We build production-ready digital products for businesses worldwide.
+- [Industries We Serve — FinTech, Healthcare, Retail](https://www.cresterix.com/industries): We build software for FinTech, retail, healthcare, education, logistics, real estate, media and startups — designed around each sector's real workflows.
+- [Our Work — Software Development Case Studies](https://www.cresterix.com/work): Case studies from Cresterix: real digital products we engineered end to end, the problems they solved and the technology behind each build.
+- [About Cresterix — Product Engineering Team in India](https://www.cresterix.com/about): Cresterix is a digital product engineering team based in Trivandrum, Kerala, India, delivering software for clients worldwide with clarity and craft.
+- [Contact Cresterix — Start a Software Project](https://www.cresterix.com/contact): Tell us what you're trying to build, improve or solve. Reach the Cresterix team in Trivandrum, Kerala by phone or email — we reply to every enquiry.
+
+## Articles
+
+- [When Should a Business Build Custom Software?](https://www.cresterix.com/insights/when-to-build-custom-software): Most businesses should buy off-the-shelf software, not build it. Here are the four signals that genuinely justify building, and the four that don't. (Software Architecture, by Godson Morais)
+- [Building a Scalable SaaS Architecture](https://www.cresterix.com/insights/scalable-saas-architecture): Scaling a SaaS product is rarely about traffic. It is about tenant isolation, background work and the decisions that get expensive to reverse later. (SaaS, by Godson Morais)
+- [How Businesses Can Automate Manual Workflows With AI](https://www.cresterix.com/insights/automate-manual-workflows-with-ai): AI automation works on a narrower set of business tasks than the marketing suggests. Here is where it reliably pays back, and where it quietly fails. (Business Automation, by Godson Morais)
+
+## Case studies
+
+- [FM Android & iOS App](https://www.cresterix.com/work/fm-android-app): A community radio station reaching only as far as its transmitter, now reaching listeners anywhere with an internet connection.
+
+## Contact
+
+- Email: hello@cresterix.com
+- Site: https://www.cresterix.com

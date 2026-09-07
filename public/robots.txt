@@ -1,4 +1,52 @@
+# Cresterix — https://www.cresterix.com
+#
+# Everything is open to everyone. The named groups below are redundant
+# with the wildcard, but they are written out deliberately: AI crawler
+# behaviour is easy to change by accident, and an explicit Allow makes
+# the intent obvious to anyone auditing this file later.
+
 User-agent: *
+Allow: /
+
+# --- Retrieval: these fetch pages to cite them in answers -----------
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# --- Training ------------------------------------------------------
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: meta-externalagent
 Allow: /
 
 Sitemap: https://www.cresterix.com/sitemap.xml
