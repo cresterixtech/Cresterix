@@ -95,29 +95,22 @@ for (const path of paths) {
   written++;
 }
 
-/* ---- _redirects --------------------------------------------------
-   Cloudflare Pages' SPA catch-all answers extensionless paths with
-   index.html *before* it resolves /solutions/ -> /solutions/index.html.
-   The result: /solutions/ served the right page but /solutions served
-   the homepage — and the bare form is exactly what the sitemap and
-   every canonical tag point at, so all 13 URLs returned identical
-   homepage content to crawlers.
+/* ---- 404.html ----------------------------------------------------
+   The site is served by Render, which has no _redirects convention —
+   its rewrite rules live in the dashboard. With the old SPA catch-all
+   (/* -> /index.html) removed, unknown paths now 404 properly instead
+   of answering 200 with the homepage, which is what we want: a soft
+   404 teaches crawlers that every wrong URL is a real page.
 
-   Explicit 200 rewrites, listed before the catch-all, pin each clean
-   URL to its prerendered file. First match wins, and the trailing
-   catch-all still hands unknown paths to the client router for the
-   404 page. */
-const redirects = [
-  ...paths
-    .filter((p) => p !== "/")
-    .map((p) => `${p}  ${p}/index.html  200`),
-  "/*  /index.html  200",
-].join("\n");
+   Render serves 404.html for those, so prerender the NotFound route
+   into it. seoFor() already marks unknown paths noindex. */
+writeFileSync(
+  join(dist, "404.html"),
+  buildPage("/404", await render("/404")),
+  "utf8"
+);
 
-writeFileSync(join(dist, "_redirects"), `${redirects}\n`, "utf8");
-
-console.log(`prerendered ${written} routes`);
-console.log(`_redirects: ${paths.length - 1} explicit rewrites + catch-all`);
+console.log(`prerendered ${written} routes + 404.html`);
 console.log(`thinnest page: ${shortest.path} (${shortest.chars} chars of text)`);
 
 // A page that renders almost nothing means a Suspense boundary was
