@@ -46,6 +46,61 @@ const escapeAttr = (s) =>
 const escapeHtml = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+/* React renders the Suspense boundary around <Routes> out of order,
+   even through the static prerender API: the visible <main> gets the
+   "Loading" fallback, and the finished page is appended near the end
+   of the document as
+
+     <div hidden id="S:0">…page…</div>
+     <script>…$RC("B:0","S:0")</script>
+
+   for that inline script to swap into place. Fine in a browser, and
+   worthless to a crawler that does not run JavaScript — which is the
+   entire audience this prerender exists for. Measured on /solutions
+   before this ran: drop the hidden blocks and 953 characters remained,
+   all of it nav and footer.
+
+   So do the swap here, at build time: move each boundary's content
+   into the slot its fallback occupies, then drop the hidden block and
+   its reveal script. The client re-renders from scratch anyway
+   (createRoot, not hydrateRoot), so nothing downstream depends on
+   these markers surviving. */
+function inlineSuspendedContent(html) {
+  let out = html;
+
+  for (let guard = 0; guard < 50; guard++) {
+    const open = out.match(/<div hidden id="S:(\d+)">/);
+    if (!open) break;
+
+    const id = open[1];
+    const start = open.index;
+    const script = out.slice(start).match(/<script(?:\s[^>]*)?>/);
+    if (!script) throw new Error(`boundary S:${id}: no reveal script found`);
+
+    const scriptStart = start + script.index;
+    const scriptEnd = out.indexOf("</script>", scriptStart);
+    if (scriptEnd < 0) throw new Error(`boundary S:${id}: unterminated script`);
+
+    // The hidden wrapper closes immediately before its script.
+    const content = out
+      .slice(start + open[0].length, scriptStart)
+      .replace(/<\/div>\s*$/, "");
+
+    out = out.slice(0, start) + out.slice(scriptEnd + "</script>".length);
+
+    const fallback = new RegExp(
+      `<!--\\$\\?--><template id="B:${id}"></template>[\\s\\S]*?<!--/\\$-->`
+    );
+    if (!fallback.test(out)) throw new Error(`boundary B:${id}: no fallback slot`);
+    out = out.replace(fallback, content);
+  }
+
+  if (out.includes("<div hidden id=\"S:")) {
+    throw new Error("a suspended boundary was left hidden");
+  }
+  return out;
+}
+
 function buildPage(path, appHtml) {
   const { title, description, url, index, jsonLd } = seoFor(path);
   let html = template;
@@ -83,12 +138,20 @@ let written = 0;
 let shortest = { path: null, chars: Infinity };
 
 for (const path of paths) {
-  const appHtml = await render(path);
+  const appHtml = inlineSuspendedContent(await render(path));
 
   const out =
     path === "/" ? join(dist, "index.html") : join(dist, path, "index.html");
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, buildPage(path, appHtml), "utf8");
+
+  // The loading fallback must never survive into a shipped page — if it
+  // does, the boundary swap above silently failed and the page is empty
+  // to anything that does not run JavaScript.
+  if (appHtml.includes("pagefall")) {
+    console.error(`\nERROR: ${path} still contains the Suspense fallback.`);
+    process.exit(1);
+  }
 
   const text = appHtml.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
   if (text.length < shortest.chars) shortest = { path, chars: text.length };
@@ -106,7 +169,7 @@ for (const path of paths) {
    into it. seoFor() already marks unknown paths noindex. */
 writeFileSync(
   join(dist, "404.html"),
-  buildPage("/404", await render("/404")),
+  buildPage("/404", inlineSuspendedContent(await render("/404"))),
   "utf8"
 );
 
