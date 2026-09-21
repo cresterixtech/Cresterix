@@ -84,8 +84,12 @@ export function densityScale() {
   return clamp(Math.sqrt(area / (1280 * 760)), 1, 1.45);
 }
 
+/* High was capped at 1.8, which on a 1440x900 display put every pass —
+   scene, eight bloom mips, vignette — through a 4.2 MP framebuffer.
+   1.5 is 31% fewer pixels per pass and indistinguishable here: the
+   field is soft, additive points under bloom, not edges. */
 export const DPR = {
-  high: [1, 1.8],
+  high: [1, 1.5],
   medium: [1, 1.5],
   low: [1, 1.25],
 };

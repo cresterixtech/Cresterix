@@ -1,7 +1,7 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useThree } from "@react-three/fiber";
 import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
-import { BlendFunction, KernelSize } from "postprocessing";
+import { BlendFunction } from "postprocessing";
 import * as THREE from "three";
 import CrestField from "./CrestField";
 import CameraRig from "./CameraRig";
@@ -132,11 +132,18 @@ export default function CinematicCanvas() {
 
         {heavyFx && (
           <EffectComposer multisampling={0} enableNormalPass={false}>
+            {/* With mipmapBlur the blur is a mip chain, and `levels`
+                is what sets its cost: each level is a downsample and
+                an upsample pass over the frame. The default of 8 was
+                sixteen passes for a halo wider than any particle
+                needs; 5 keeps the glow and drops six of them.
+                (kernelSize is ignored on the mipmap path, so the
+                LARGE it used to declare was doing nothing.) */}
             <Bloom
               intensity={0.72}
               luminanceThreshold={0.16}
               luminanceSmoothing={0.32}
-              kernelSize={KernelSize.LARGE}
+              levels={5}
               mipmapBlur
             />
             <Vignette

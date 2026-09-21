@@ -20,18 +20,24 @@
   gap: var(--s-5);
 }
 
-/* The ground plane fades in rather than snapping. */
+/* The ground plane fades in rather than snapping.
+
+   The backdrop blur is only declared once the bar is solid. At
+   opacity 0 the compositor still ran a full-width blur of the canvas
+   under the bar on every frame — invisible, and paid for on the most
+   animated part of every page, the top. Gating it changes nothing you
+   can see: the plane is at opacity 0 whenever the blur is absent. */
 .nav::before {
   content: "";
   position: absolute;
   inset: 0;
   background: rgb(5 7 10 / 72%);
-  backdrop-filter: blur(18px) saturate(130%);
   opacity: 0;
   transition: opacity var(--d-slow) var(--ease-out);
 }
 .nav.is-solid::before {
   opacity: 1;
+  backdrop-filter: blur(18px) saturate(130%);
 }
 
 .nav__rule {

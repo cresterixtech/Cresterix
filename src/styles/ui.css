@@ -328,16 +328,24 @@
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
 }
 
-/* Hairline grid: cells separated by 1px lines rather than gaps. */
+/* Hairline grid: cells separated by 1px lines rather than gaps.
+
+   The backdrop blur sits on the container, not the cells. Each element
+   with a backdrop-filter is its own readback-and-blur of the live
+   canvas behind it, every frame the canvas changes — and it changes
+   every frame. Six capability cells, eight security cells and three
+   engagement cells each blurring independently was the single largest
+   per-frame cost on the page. One blur under the whole grid looks the
+   same, since the cells are translucent over it, and costs one pass. */
 .grid--ruled {
   border: 1px solid var(--line);
   border-radius: var(--r);
   background: var(--line);
+  backdrop-filter: blur(14px);
   overflow: hidden;
 }
 .grid--ruled > * {
   background: rgb(8 11 16 / 72%);
-  backdrop-filter: blur(14px);
 }
 
 /* ---- Section headers ------------------------------------------- */
