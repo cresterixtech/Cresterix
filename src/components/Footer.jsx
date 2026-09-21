@@ -66,7 +66,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <nav className="foot__col" aria-label="Social">
+          <nav className="foot__col foot__col--social" aria-label="Social">
             <h2 className="foot__head">Connect</h2>
             <ul>
               {SOCIAL.map((l) => (
@@ -79,7 +79,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <div className="foot__col">
+          <div className="foot__col foot__col--contact">
             <h2 className="foot__head">Contact</h2>
             <address className="foot__addr">
               {CONTACT_INFO.addressLines.map((line) => (

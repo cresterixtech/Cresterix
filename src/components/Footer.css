@@ -140,3 +140,62 @@
 .foot__legal a:hover {
   color: var(--ink-dim);
 }
+
+/* ---- Phones: a shorter footer --------------------------------------
+   Four vertical lists stacked two-up ran to 1,022px on a 375px phone —
+   1.3 screens of footer. Most of it was the Connect and Contact columns
+   sharing a grid row, with three short social links stretched to match
+   an address, two phones and two emails. On phones those two columns go
+   full width and run inline, and the gaps come down from their desktop
+   values. Everything above 720px is untouched. */
+@media (max-width: 720px) {
+  .foot__inner {
+    gap: var(--s-6);
+    padding-block: var(--s-7) var(--s-5);
+  }
+  .foot__brand {
+    gap: var(--s-3);
+  }
+  .foot__cols {
+    gap: var(--s-6) var(--s-5);
+  }
+  .foot__head {
+    margin-bottom: var(--s-3);
+  }
+  .foot__col ul {
+    gap: 0.5rem;
+  }
+
+  .foot__col--social,
+  .foot__col--contact {
+    grid-column: 1 / -1;
+  }
+  .foot__col--social ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+  }
+
+  /* The address runs as one wrapped line; the commas are decorative,
+     the <address> element already carries the semantics. */
+  .foot__addr {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0 0.3rem;
+    margin-bottom: 0.6rem;
+  }
+  .foot__addr span:not(:last-child)::after {
+    content: ",";
+  }
+  /* Scoped under the column modifier so it outranks the base
+     `.foot__col ul` rule, which sets column direction and gap. */
+  .foot__col--contact .foot__contactLinks {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+  }
+
+  .foot__bar {
+    padding-block: var(--s-4);
+  }
+}
