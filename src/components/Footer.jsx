@@ -44,7 +44,7 @@ export default function Footer() {
         </div>
 
         <div className="foot__cols">
-          <nav className="foot__col" aria-label="Sitemap">
+          <nav className="foot__col foot__col--company" aria-label="Sitemap">
             <h2 className="foot__head">Company</h2>
             <ul>
               {SITEMAP.map((l) => (
@@ -55,7 +55,7 @@ export default function Footer() {
             </ul>
           </nav>
 
-          <nav className="foot__col" aria-label="Capabilities">
+          <nav className="foot__col foot__col--caps" aria-label="Capabilities">
             <h2 className="foot__head">Capabilities</h2>
             <ul>
               {CAPABILITIES.map((l) => (

@@ -141,61 +141,139 @@
   color: var(--ink-dim);
 }
 
-/* ---- Phones: a shorter footer --------------------------------------
-   Four vertical lists stacked two-up ran to 1,022px on a 375px phone —
-   1.3 screens of footer. Most of it was the Connect and Contact columns
-   sharing a grid row, with three short social links stretched to match
-   an address, two phones and two emails. On phones those two columns go
-   full width and run inline, and the gaps come down from their desktop
-   values. Everything above 720px is untouched. */
+/* ---- Phones: a different footer, not a squeezed one ----------------
+   The desktop footer is four vertical link columns under a brand
+   block. Stacked on a 375px phone that ran to 1,022px — 1.3 screens —
+   and tightening the gaps only got it to 800. The height was
+   structural: four headed lists, each link on its own line, and a
+   brand line that repeats the capability list beneath it.
+
+   Below 720px the footer is rebuilt around what a phone visitor is
+   actually there for, in this order:
+
+     brand row
+     contact card   — email, phones, address; the tap targets
+     site links     — one wrapped line
+     capabilities   — one wrapped line of mono labels
+     socials        — one wrapped line
+     legal bar
+
+   The column headings stay in the DOM for assistive tech and the nav
+   landmarks, but are visually removed: a heading over a single line of
+   links costs a row and adds nothing a sighted reader needs.
+   Everything above 720px is untouched. */
 @media (max-width: 720px) {
   .foot__inner {
-    gap: var(--s-6);
-    padding-block: var(--s-7) var(--s-5);
-  }
-  .foot__brand {
-    gap: var(--s-3);
-  }
-  .foot__cols {
-    gap: var(--s-6) var(--s-5);
-  }
-  .foot__head {
-    margin-bottom: var(--s-3);
-  }
-  .foot__col ul {
-    gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-5);
+    padding-block: var(--s-6) var(--s-4);
   }
 
-  .foot__col--social,
-  .foot__col--contact {
-    grid-column: 1 / -1;
+  /* Brand: mark + wordmark on one row, tagline beneath it. The
+     "Digital Product Engineering · Web · Mobile…" line is the
+     capability list again, so it goes. */
+  .foot__brand {
+    gap: 0.6rem;
   }
-  .foot__col--social ul {
+  .foot__brand .logo__mark {
+    height: 1.7rem;
+  }
+  .foot__brand .logo__word {
+    height: 0.74rem;
+  }
+  .foot__disc {
+    display: none;
+  }
+
+  .foot__cols {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+  }
+
+  .foot__head {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  .foot__col {
+    position: relative;
+  }
+
+  /* Every list becomes a wrapped row with a dot between items. Scoped
+     under .foot__col so it outranks the base `.foot__col ul` column
+     rule at equal specificity by source order. */
+  .foot__col ul {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 0.4rem 1.25rem;
+    align-items: baseline;
+    gap: 0.35rem 0;
+  }
+  .foot__col li:not(:last-child)::after {
+    content: "·";
+    margin-inline: 0.6rem;
+    color: var(--ink-decor);
   }
 
-  /* The address runs as one wrapped line; the commas are decorative,
-     the <address> element already carries the semantics. */
+  .foot__col--company a {
+    color: var(--ink-dim);
+    font-size: var(--fs-body);
+  }
+
+  .foot__col--caps a {
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono-sm);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* Contact: a bordered card, first in the stack. Address in small
+     mono as one wrapped line; phones and emails as tap targets. */
+  .foot__col--contact {
+    order: -1;
+    padding: 1rem 1.1rem 1.05rem;
+    border: 1px solid var(--line-mid);
+    border-radius: var(--r);
+    background: rgb(231 234 239 / 2.5%);
+  }
   .foot__addr {
     flex-direction: row;
     flex-wrap: wrap;
     gap: 0 0.3rem;
-    margin-bottom: 0.6rem;
+    font-family: var(--font-mono);
+    font-size: var(--fs-mono-sm);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.75rem;
   }
   .foot__addr span:not(:last-child)::after {
     content: ",";
   }
-  /* Scoped under the column modifier so it outranks the base
-     `.foot__col ul` rule, which sets column direction and gap. */
   .foot__col--contact .foot__contactLinks {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0.4rem 1.25rem;
+    gap: 0.4rem 1.1rem;
+  }
+  /* No dots inside the card. Three classes deep on purpose: the dot
+     rule above is (0,2,2) because :not(:last-child) counts, and a
+     two-class selector loses to it. */
+  .foot__col--contact .foot__contactLinks li::after {
+    content: none;
+  }
+  /* --fs-sm lets both phone numbers share a row on a 375px frame;
+     at body size the second one wrapped and cost a line. */
+  .foot__contactLinks a {
+    font-size: var(--fs-sm);
+    color: var(--ink);
   }
 
   .foot__bar {
     padding-block: var(--s-4);
+    gap: 0.4rem 1rem;
   }
 }
