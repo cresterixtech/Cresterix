@@ -20,13 +20,6 @@ const CAPABILITIES = [
   { to: "/solutions#cloud-backend", label: "Cloud & Backend" },
 ];
 
-/* Social handles are placeholders until the real profiles are supplied. */
-const SOCIAL = [
-  { href: "https://www.linkedin.com/", label: "LinkedIn" },
-  { href: "https://www.instagram.com/", label: "Instagram" },
-  { href: "https://github.com/", label: "GitHub" },
-];
-
 export default function Footer() {
   return (
     <footer className="foot">
@@ -60,19 +53,6 @@ export default function Footer() {
               {CAPABILITIES.map((l) => (
                 <li key={l.label}>
                   <Link to={l.to}>{l.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <nav className="foot__col foot__col--social" aria-label="Social">
-            <h2 className="foot__head">Connect</h2>
-            <ul>
-              {SOCIAL.map((l) => (
-                <li key={l.label}>
-                  <a href={l.href} target="_blank" rel="noreferrer noopener">
-                    {l.label}
-                  </a>
                 </li>
               ))}
             </ul>

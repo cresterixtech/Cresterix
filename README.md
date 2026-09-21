@@ -76,7 +76,6 @@ with no verified challenge/solution/result copy. So:
   article yet, which filter to an honest empty state.
 - **Privacy / Terms** — section structure only. Legal text must be written and
   reviewed by counsel; improvising it would be worse than leaving it empty.
-- **Social links** — placeholder URLs in `src/components/Footer.jsx`.
 - **Contact form** — validates fully, but posts nowhere until you set an endpoint:
 
   ```bash
