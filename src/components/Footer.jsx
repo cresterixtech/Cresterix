@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Logo from "./Logo";
-import { CONTACT_INFO, phoneHref } from "../data/site";
 import "./Footer.css";
 
 const SITEMAP = [
@@ -78,27 +77,6 @@ export default function Footer() {
               ))}
             </ul>
           </nav>
-
-          <div className="foot__col foot__col--contact">
-            <h2 className="foot__head">Contact</h2>
-            <address className="foot__addr">
-              {CONTACT_INFO.addressLines.map((line) => (
-                <span key={line}>{line}</span>
-              ))}
-            </address>
-            <ul className="foot__contactLinks">
-              {CONTACT_INFO.phones.map((p) => (
-                <li key={p}>
-                  <a href={phoneHref(p)}>{p}</a>
-                </li>
-              ))}
-              {CONTACT_INFO.emails.map((e) => (
-                <li key={e}>
-                  <a href={`mailto:${e}`}>{e}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
       </div>
 

@@ -90,32 +90,6 @@
   color: var(--ink);
 }
 
-.foot__addr {
-  display: flex;
-  flex-direction: column;
-  font-style: normal;
-  font-size: var(--fs-sm);
-  color: var(--ink-dim);
-  line-height: var(--lh-relaxed);
-  margin-bottom: 0.9rem;
-}
-.foot__contactLinks {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-}
-.foot__contactLinks a {
-  font-size: var(--fs-sm);
-  color: var(--ink-dim);
-  /* Phone numbers and emails run longer than the nav labels above and
-     this column can be as narrow as ~150px on a mid-size phone. */
-  overflow-wrap: anywhere;
-  transition: color var(--d) var(--ease-out);
-}
-.foot__contactLinks a:hover {
-  color: var(--ink);
-}
-
 .foot__bar {
   display: flex;
   flex-wrap: wrap;
@@ -152,7 +126,6 @@
    actually there for, in this order:
 
      brand row
-     contact card   — email, phones, address; the tap targets
      site links     — one wrapped line
      capabilities   — one wrapped line of mono labels
      socials        — one wrapped line
@@ -231,45 +204,6 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink-faint);
-  }
-
-  /* Contact: a bordered card, first in the stack. Address in small
-     mono as one wrapped line; phones and emails as tap targets. */
-  .foot__col--contact {
-    order: -1;
-    padding: 1rem 1.1rem 1.05rem;
-    border: 1px solid var(--line-mid);
-    border-radius: var(--r);
-    background: rgb(231 234 239 / 2.5%);
-  }
-  .foot__addr {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0 0.3rem;
-    font-family: var(--font-mono);
-    font-size: var(--fs-mono-sm);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    margin-bottom: 0.75rem;
-  }
-  .foot__addr span:not(:last-child)::after {
-    content: ",";
-  }
-  .foot__col--contact .foot__contactLinks {
-    gap: 0.4rem 1.1rem;
-  }
-  /* No dots inside the card. Three classes deep on purpose: the dot
-     rule above is (0,2,2) because :not(:last-child) counts, and a
-     two-class selector loses to it. */
-  .foot__col--contact .foot__contactLinks li::after {
-    content: none;
-  }
-  /* --fs-sm lets both phone numbers share a row on a 375px frame;
-     at body size the second one wrapped and cost a line. */
-  .foot__contactLinks a {
-    font-size: var(--fs-sm);
-    color: var(--ink);
   }
 
   .foot__bar {
