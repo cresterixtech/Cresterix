@@ -289,6 +289,33 @@
   }
 }
 
+/* ---- Mobile: solid plates under copy that sits on the raw field ----
+   Capabilities and Process are the two Home sections outside .ground.
+   On desktop the copy shares the frame with the formations and the
+   72%-opaque ruled cells read fine. On a phone the same formations fill
+   the full width directly behind the single stacked column, and body
+   text was colliding with the particles. Near-solid plates here; the
+   desktop glass is left exactly as it was. */
+@media (max-width: 859px) {
+  .capabilities .caps > * {
+    background: rgb(8 11 16 / 94%);
+  }
+
+  .steps {
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: rgb(8 11 16 / 92%);
+    backdrop-filter: blur(14px);
+    overflow: hidden;
+  }
+  .step {
+    padding-inline: clamp(1.1rem, 0.8rem + 1.6vw, 1.6rem);
+  }
+  .step:last-child {
+    border-bottom: none;
+  }
+}
+
 /* ---- Work list ---------------------------------------------------- */
 .worklist {
   border-top: 1px solid var(--line);

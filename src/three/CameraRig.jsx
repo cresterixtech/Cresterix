@@ -57,14 +57,26 @@ function sample(p) {
   return { fov: k0.fov + (k1.fov - k0.fov) * t };
 }
 
+/* The keyframes above are authored for a landscape frame. A phone in
+   portrait (~0.46 aspect) sees under a third of that horizontal extent,
+   so the same pose leaves every formation sprawling edge to edge at
+   full density directly behind the stacked copy. Pull the camera back
+   along its own line of sight on narrow frames so the formations sit
+   inside the viewport as a backdrop instead. Resolves to exactly 1 for
+   any landscape aspect, so desktop framing is untouched. */
+function portraitPush(aspect) {
+  return aspect < 1 ? 1 + (1 - aspect) * 0.75 : 1;
+}
+
 export default function CameraRig() {
-  const { camera } = useThree();
+  const { camera, size } = useThree();
   const target = useRef(new THREE.Vector3());
   const ready = useRef(false);
 
   useFrame((_, dt) => {
     const d = Math.min(dt, 0.05);
     const ambient = stage.mode === "ambient";
+    const push = portraitPush(size.width / size.height);
 
     let fov;
     if (ambient) {
@@ -80,9 +92,11 @@ export default function CameraRig() {
     _pos.x += stage.pointerEased.x * 0.55 * par;
     _pos.y += stage.pointerEased.y * 0.35 * par;
 
+    if (push !== 1) _pos.sub(_look).multiplyScalar(push).add(_look);
+
     if (stage.reduced) {
       // No travel: hold a single legible composition.
-      camera.position.set(0.4, 0.3, 12.5);
+      camera.position.set(0.4 * push, 0.3 * push, 12.5 * push);
       target.current.set(0, 0, 0);
       camera.lookAt(target.current);
       if (camera.fov !== 50) {
